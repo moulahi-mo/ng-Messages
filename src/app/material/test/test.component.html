@@ -1,0 +1,231 @@
+<section class="mt-5 text-dark">
+  <p>
+    <mat-toolbar color="warn">
+      <button
+        mat-icon-button
+        class="example-icon"
+        aria-label="Example icon-button with menu icon"
+        [matMenuTriggerFor]="menu"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>dialpad</mat-icon>
+          <span>Redial</span>
+        </button>
+        <button mat-menu-item disabled>
+          <mat-icon>voicemail</mat-icon>
+          <span>Check voice mail</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>notifications_off</mat-icon>
+          <span>Disable alerts</span>
+        </button>
+      </mat-menu>
+      <span>My App</span>
+      <span class="example-spacer"></span>
+      <button
+        mat-icon-button
+        class="example-icon favorite-icon"
+        aria-label="Example icon-button with heart icon"
+      >
+        <mat-icon>favorite</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        class="example-icon"
+        aria-label="Example icon-button with share icon"
+      >
+        <mat-icon>share</mat-icon>
+      </button>
+    </mat-toolbar>
+  </p>
+
+  <button mat-icon-button color="primary">
+    <mat-icon>favorite</mat-icon>
+  </button>
+  <mat-progress-bar mode="query" color="warn"></mat-progress-bar>
+  <button color="warn" mat-mini-fab>
+    <mat-icon>home</mat-icon>
+  </button>
+  <mat-spinner mode="determinate" color="warn" value="63"></mat-spinner>
+  <form #f="ngForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Your Job</mat-label>
+      <mat-select>
+        <mat-option value="option1">Option 1</mat-option>
+        <mat-option value="option2">Option 2</mat-option>
+        <mat-option value="option3">Option 3</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field
+      hintLabel="Max 6 characters"
+      appearance="outline"
+      color="primary"
+      class="text-dark"
+    >
+      <mat-label>Name</mat-label>
+      <input
+        ngModel
+        #name="ngModel"
+        name="name"
+        type="text"
+        matInput
+        placeholder="Your Name"
+        required
+        maxlength="6"
+        minlength="3"
+        class="text-dark"
+      />
+      <mat-error *ngIf="name.errors?.required || name.errors?.minlength"
+        >name is requierd
+      </mat-error>
+
+      <mat-hint align="end" class="text-dark">
+        use name {{ name?.value?.length }} /6</mat-hint
+      >
+    </mat-form-field>
+    <mat-form-field
+      appearance="standard"
+      hintLabel="email synthaxe is important"
+    >
+      <mat-label>Email</mat-label>
+      <input
+        ngModel
+        #email="ngModel"
+        name="email"
+        required
+        email
+        matInput
+        placeholder="your email"
+        type="email"
+      />
+      <mat-error *ngIf="email.errors?.required"> email is requierd</mat-error>
+      <mat-error *ngIf="email.errors?.email"> email is false</mat-error>
+      <mat-hint align="end"> {{ email?.value?.length }} /100 </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Enter your password *</mat-label>
+      <input matInput [type]="hide ? 'password' : 'text'" type="password" />
+      <button
+        required
+        mat-icon-button
+        matSuffix
+        (click)="hide = !hide"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide"
+      >
+        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Amount</mat-label>
+      <input matInput type="number" class="example-right-align" #i />
+      <span matPrefix>MAD&nbsp;</span>
+      <span matSuffix>.00</span>
+      <mat-hint align="start"
+        >must be number plz {{ i.value?.length || 0 }}/10
+      </mat-hint>
+    </mat-form-field>
+    <!-- <mat-form-field>
+        <label id="example-radio-group-label">Pick your favorite season</label>
+        <mat-radio-group
+          aria-labelledby="example-radio-group-label"
+          class="example-radio-group"
+          [(ngModel)]="favoriteSeason"
+        >
+          <mat-radio-button
+            class="example-radio-button"
+            *ngFor="let season of seasons"
+            [value]="season"
+          >
+            {{ season }}
+          </mat-radio-button>
+        </mat-radio-group>
+        <div>Your favorite season is: {{ favoriteSeason }}</div>
+      </mat-form-field> -->
+
+    <mat-form-field color="warn" appearance="standard">
+      <mat-label>Choose a date</mat-label>
+      <!-- <mat-date-range-input [rangePicker]="picker">
+        <input matStartDate placeholder="Start date" />
+        <input matEndDate placeholder="End date" />
+      </mat-date-range-input> -->
+      <input matInput [matDatepicker]="picker" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-checkbox
+      class=""
+      color="primary"
+      labelPosition="after"
+      indeterminate="true"
+      >Agree with agrement</mat-checkbox
+    >
+    <mat-slide-toggle color="warn">Slide me!</mat-slide-toggle>
+    <mat-divider></mat-divider>
+    <mat-list role="list">
+      <mat-list-item role="listitem">Item 1</mat-list-item>
+      <mat-list-item role="listitem">Item 2</mat-list-item>
+      <mat-list-item role="listitem">Item 3</mat-list-item>
+      <mat-list-item
+        mat-list-item
+        href="..."
+        *ngFor="let link of [0, 1, 2, 3, 4]"
+        color="warn"
+      >
+        <mat-icon matListIcon>folder</mat-icon>
+        {{ link }} <br />
+      </mat-list-item>
+    </mat-list>
+    <button
+      type="submit"
+      mat-raised-button
+      color="warn"
+      class="sub d-block mx-auto"
+      style="width: 20%"
+    >
+      Submit
+    </button>
+  </form>
+</section>
+
+<section class="test2">
+  <!-- <p>
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <span>My App</span>
+        <span class="example-spacer"></span>
+        <button
+          mat-icon-button
+          class="example-icon"
+          aria-label="Example icon-button with menu icon"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+      </mat-toolbar-row>
+
+      <mat-toolbar-row>
+        <span>Second Line</span>
+        <span class="example-spacer"></span>
+        <button
+          mat-icon-button
+          class="example-icon favorite-icon"
+          aria-label="Example icon-button with heart icon"
+        >
+          <mat-icon>favorite</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          class="example-icon"
+          aria-label="Example icon-button with share icon"
+        >
+          <mat-icon>share</mat-icon>
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </p> -->
+</section>
