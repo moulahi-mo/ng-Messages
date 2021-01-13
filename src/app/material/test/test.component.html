@@ -1,4 +1,4 @@
-<section class="mt-5 text-dark">
+<section class="mb-5 text-dark">
   <p>
     <mat-toolbar color="warn">
       <button
@@ -23,25 +23,76 @@
           <span>Disable alerts</span>
         </button>
       </mat-menu>
-      <span>My App</span>
-      <span class="example-spacer"></span>
-      <button
-        mat-icon-button
-        class="example-icon favorite-icon"
-        aria-label="Example icon-button with heart icon"
-      >
-        <mat-icon>favorite</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        class="example-icon"
-        aria-label="Example icon-button with share icon"
-      >
-        <mat-icon>share</mat-icon>
-      </button>
+      <span>
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          color="accent"
+          class="h3 mr-5"
+          >home</mat-icon
+        >
+        Cornavod
+      </span>
+
+      <mat-nav-list class="m-auto d-flex">
+        <a
+          mat-list-item
+          class="text-decoration-none text-dark"
+          [matMenuTriggerFor]="link1"
+          >link1</a
+        >
+        <mat-menu #link1="matMenu">
+          <button mat-menu-item>Item 1</button>
+          <button mat-menu-item>Item 2</button>
+        </mat-menu>
+        <a class="text-decoration-none text-dark" mat-list-item>link2</a>
+        <mat-list-item>
+          <a class="text-decoration-none text-dark" matLine>link3</a>
+          <button mat-icon-button>
+            <mat-icon>info</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-nav-list>
+      <!-- <div class="m-auto">
+        <ul class="d-flex justify-content-around list-unstyled mt-3 w-50 px-5">
+          <li><a class="text-decoration-none text-dark">link1</a></li>
+          <li><a class="text-decoration-none text-dark mx-5">link1</a></li>
+          <li><a class="text-decoration-none text-dark">link1</a></li>
+        </ul>
+      </div> -->
+      <span class="example-spacer"> </span>
+      <div class="ml-auto">
+        <button
+          mat-icon-button
+          class="example-icon favorite-icon"
+          aria-label="Example icon-button with heart icon"
+        >
+          <mat-icon>favorite</mat-icon>
+        </button>
+        <button
+          [matMenuTriggerFor]="menu1"
+          mat-icon-button
+          class="example-icon"
+          aria-label="Example icon-button with share icon"
+        >
+          <mat-icon>share</mat-icon>
+        </button>
+        <mat-menu #menu1="matMenu">
+          <button mat-menu-item>Item 1</button>
+          <button mat-menu-item>Item 2</button>
+        </mat-menu>
+      </div>
     </mat-toolbar>
   </p>
-
+  <mat-slider
+    min="1"
+    max="100"
+    step="5"
+    value="30"
+    color="primary"
+    thumbLabel
+    tickInterval="1"
+  ></mat-slider>
   <button mat-icon-button color="primary">
     <mat-icon>favorite</mat-icon>
   </button>

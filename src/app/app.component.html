@@ -1,1 +1,25 @@
-<app-test></app-test>
+<mat-sidenav-container>
+  <mat-sidenav #sideNav mode="side" class="pl-3">
+    <h3 class="lead text-info mt-3">Welcome Josh</h3>
+    <mat-nav-list class="mt-5">
+      <a mat-list-item (click)="sideNav.close()">
+        Home <mat-icon color="primary" class="ml-2"> home </mat-icon>
+      </a>
+      <a mat-list-item (click)="sideNav.close()">
+        SignUp <mat-icon color="primary" class="ml-2">face </mat-icon>
+      </a>
+      <a mat-list-item (click)="sideNav.close()">
+        SignIn <mat-icon color="primary" class="ml-2">signup </mat-icon>
+      </a>
+      <a mat-list-item (click)="sideNav.close()">
+        Logout <mat-icon color="primary" class="ml-2"> input </mat-icon>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <button mat-raised-button color="primary" (click)="sideNav.toggle()">
+      toggle
+    </button>
+    <app-test></app-test>
+  </mat-sidenav-content>
+</mat-sidenav-container>

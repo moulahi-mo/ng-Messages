@@ -19,9 +19,13 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   imports: [
+    MatSliderModule,
+    MatSidenavModule,
     MatMenuModule,
     MatToolbarModule,
     MatDividerModule,
@@ -43,6 +47,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatBottomSheetModule,
   ],
   exports: [
+    MatSliderModule,
+    MatSidenavModule,
     MatMenuModule,
     MatToolbarModule,
     MatDividerModule,
