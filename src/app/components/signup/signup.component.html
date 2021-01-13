@@ -1,6 +1,7 @@
 <section class="mt-5 mx-auto">
+  <h1 class="display-3 text-center">SignUp</h1>
   <form
-    [formGroup]="loginForm"
+    [formGroup]="signupForm"
     (ngSubmit)="onSubmit()"
     class="d-flex flex-column justify-content-between w-75 m-auto"
   >
@@ -16,14 +17,14 @@
         placeholder="your email"
         type="email"
       />
-      <mat-error *ngIf="loginForm.get('email').errors?.required">
+      <mat-error *ngIf="signupForm.get('email').errors?.required">
         email is requierd</mat-error
       >
-      <mat-error *ngIf="loginForm.get('email').errors?.email">
+      <mat-error *ngIf="signupForm.get('email').errors?.email">
         email is false</mat-error
       >
       <mat-hint align="end">
-        {{ loginForm.get("email").value?.length }} /100
+        {{ signupForm.get("email").value?.length }} /100
       </mat-hint>
     </mat-form-field>
 
@@ -49,14 +50,14 @@
     </mat-form-field>
 
     <button
-      [disabled]="!loginForm.valid"
+      [disabled]="!signupForm.valid"
       type="submit"
       mat-raised-button
       color="warn"
       class="sub d-block mx-auto"
       style="width: 20%"
     >
-      Submit
+      signUp
     </button>
   </form>
 </section>

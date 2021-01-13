@@ -13,12 +13,20 @@ import { TestComponent } from './material/test/test.component';
 import { MessagesService } from './services/messages.service';
 import { AuthService } from './services/auth.service';
 import { MaterialModule } from './shared/material.module';
+import { FlashMessagesModule } from 'angular2-flash-messages';
+
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { SignupComponent } from './components/signup/signup.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     MessagesComponent,
     TestComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,6 +36,10 @@ import { MaterialModule } from './shared/material.module';
     ReactiveFormsModule,
     MaterialModule,
     FormsModule,
+    FlashMessagesModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
   ],
   providers: [MessagesService, AuthService],
   bootstrap: [AppComponent],

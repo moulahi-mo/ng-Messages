@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "portfolio-messages-780f3": {
+      "hosting": {
+        "material": [
+          "portfolio-messages-780f3"
+        ]
+      }
+    }
+  }
+}

@@ -5,18 +5,19 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+
 import { AuthService } from '../../services/auth.service';
 import { Login } from '../../Models/interfaces';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class SignupComponent implements OnInit {
   hide: boolean = true;
-  loginForm: FormGroup;
+  signupForm: FormGroup;
   user: Login;
   constructor(
     private fb: FormBuilder,
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loginForm = this.fb.group({
+    this.signupForm = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
       password: [
         null,
@@ -40,15 +41,15 @@ export class LoginComponent implements OnInit {
     });
   }
   public onSubmit() {
-    console.log(this.loginForm.value);
+    console.log(this.signupForm.value);
     this.auth
-      .login(
-        this.loginForm.get('email').value,
-        this.loginForm.get('password').value
+      .signUp(
+        this.signupForm.get('email').value,
+        this.signupForm.get('password').value
       )
       .then((data) => {
-        console.log(data, 'auth success');
-        this._flashMessagesService.show('login OK', {
+        console.log(data, 'signup success');
+        this._flashMessagesService.show('signup OK', {
           cssClass: 'alert alert-success rounded-0 text-center lead',
           timeout: 4000,
         });
