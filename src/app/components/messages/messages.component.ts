@@ -4,7 +4,7 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
+
 const html = `
 Pizza party!!! 🍕
 `;
@@ -18,9 +18,10 @@ export class MessagesComponent implements OnInit {
   progress: number = 0;
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
-  constructor(private snackBar: MatSnackBar, public dialog: MatDialog) {}
+  constructor(private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
+    //*progress spinner
     const t = setInterval(() => {
       this.progress += 5;
       if (this.progress === 105) {
@@ -29,14 +30,12 @@ export class MessagesComponent implements OnInit {
       }
     }, 1000);
   }
+  // * toggle messages
   toggle() {
     this.snackBar.open(html, 'undo', {
       duration: 4000,
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
     });
-  }
-  openDialog() {
-    this.dialog.open(this.dg);
   }
 }

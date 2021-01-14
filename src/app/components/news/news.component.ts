@@ -8,8 +8,18 @@ import { NewsApiService } from 'src/app/services/news-api.service';
   styleUrls: ['./news.component.scss'],
 })
 export class NewsComponent implements OnInit {
+  isFavorite: boolean = false;
   newsCard: News;
   newsList: News[] = [];
+  tabs: string[] = [
+    'general',
+    'technology',
+    'business',
+    'entertainment',
+    'health',
+    'science',
+    'sports',
+  ];
   constructor(private nw: NewsApiService) {}
 
   ngOnInit(): void {
@@ -21,11 +31,11 @@ export class NewsComponent implements OnInit {
       url: null,
       urlToImage: null,
     };
-    this.getNews();
+    this.getNews('trend');
   }
 
-  public getNews() {
-    this.nw.fetchNews().subscribe((data) => {
+  public getNews(t?: string) {
+    this.nw.fetchNews(t).subscribe((data) => {
       console.log(data.articles);
       this.newsList = data.articles;
     });
@@ -49,5 +59,13 @@ export class NewsComponent implements OnInit {
   public searchForNewArticle(list: News[]) {
     console.log(list);
     this.newsList = list;
+  }
+
+  public getCategory(label: string) {
+    console.log('tab selected');
+    this.nw.fetchNewsByCategory(label).subscribe((data) => {
+      console.log(data);
+      this.newsList = data.articles;
+    });
   }
 }

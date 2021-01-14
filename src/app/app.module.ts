@@ -29,6 +29,9 @@ import { AuthGuard } from './shared/auth.guard';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { NewsApiService } from './services/news-api.service';
 import { SearchBoxComponent } from './components/search-box/search-box.component';
+import { AboutComponent } from './components/about/about.component';
+import { FavoritesComponent } from './components/favorites/favorites.component';
+import { AccountComponent } from './components/account/account.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +46,9 @@ import { SearchBoxComponent } from './components/search-box/search-box.component
     SettingsComponent,
     NotFoundComponent,
     SearchBoxComponent,
+    AboutComponent,
+    FavoritesComponent,
+    AccountComponent,
   ],
   imports: [
     BrowserModule,
