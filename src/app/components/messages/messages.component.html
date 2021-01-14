@@ -1,1 +1,89 @@
-<p>messages works!</p>
+<main>
+  <!-- ? Jumb -->
+  <section class="row">
+    <div class="col-6">
+      <div class="jumbotron jumbotron-fluid bg-transparent my-0 py-0">
+        <div class="container">
+          <h1 class="display-3 text-warning">Messages</h1>
+          <p class="lead">
+            Your inbox
+            <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+              <mat-button-toggle value="bold">Bold</mat-button-toggle>
+              <mat-button-toggle value="italic">Italic</mat-button-toggle>
+              <mat-button-toggle value="underline">Underline</mat-button-toggle>
+            </mat-button-toggle-group>
+          </p>
+          <hr class="my-2" />
+          <p class="lead">
+            <button
+              mat-stroked-button
+              (click)="toggle()"
+              mat-fab
+              color="primary"
+            >
+              Start
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <aside #dg>
+    <mat-dialog-content> This is a dialog </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button mat-dialog-close>Okay</button>
+    </mat-dialog-actions>
+  </aside>
+
+  <!-- ? Tabs -->
+  <section>
+    <mat-tab-group
+      dynamicHeight
+      mat-align-tabs="center"
+      animationDuration="1000ms"
+    >
+      <mat-tab routerLink="/inbox" label="Inbox">
+        <ng-template mat-tab-label>
+          <mat-icon
+            class="example-tab-icon mr-2"
+            matBadge="52"
+            matBadgeSize="medium"
+            matBadgeColor="accent"
+            matBadgePosition="after"
+            >mail</mat-icon
+          >
+          Inbox
+        </ng-template>
+
+        <app-inbox></app-inbox>
+      </mat-tab>
+      <mat-tab routerLink="/news" label="News">
+        <app-news></app-news>
+      </mat-tab>
+      <mat-tab routerLink="/settings" label="Settings">
+        <mat-card
+          >Settings manage :
+
+          <app-settings></app-settings>
+        </mat-card>
+      </mat-tab>
+      <mat-tab label="Tools">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Your Consuming Data</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-progress-spinner
+              [value]="progress"
+              color="accent"
+              mode="determinate"
+            ></mat-progress-spinner>
+          </mat-card-content>
+          <mat-card-footer> {{ progress | percent }}</mat-card-footer>
+
+          <app-settings> </app-settings>
+        </mat-card>
+      </mat-tab>
+    </mat-tab-group>
+  </section>
+</main>

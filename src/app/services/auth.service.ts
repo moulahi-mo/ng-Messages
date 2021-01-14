@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 import firebase from 'firebase/app';
 @Injectable({
   providedIn: 'root',
@@ -21,19 +21,8 @@ export class AuthService {
     return this.afAuth.signInWithEmailAndPassword(email, pass);
   }
 
-  public authState(): boolean {
-    this.afAuth.authState.subscribe((user) => {
-      if (user) {
-        console.log(user, this.isLogin);
-        this.isLogin = true;
-        return this.isLogin;
-      } else {
-        console.log(user, this.isLogin);
-        this.isLogin = false;
-        return this.isLogin;
-      }
-    });
-    return this.isLogin;
+  public authState(): Observable<any> {
+    return this.afAuth.user;
   }
   public authListener(): Observable<any> {
     const authState = Observable.create((observer: Observer<any>) => {

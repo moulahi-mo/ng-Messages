@@ -21,9 +21,22 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
-
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 @NgModule({
   imports: [
+    MatAutocompleteModule,
+    MatDialogModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatChipsModule,
+    MatSnackBarModule,
+    MatTabsModule,
     MatSliderModule,
     MatSidenavModule,
     MatMenuModule,
@@ -47,6 +60,13 @@ import { MatSliderModule } from '@angular/material/slider';
     MatBottomSheetModule,
   ],
   exports: [
+    MatAutocompleteModule,
+    MatDialogModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatChipsModule,
+    MatSnackBarModule,
+    MatTabsModule,
     MatSliderModule,
     MatSidenavModule,
     MatMenuModule,

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { userInfo } from 'os';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
+
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -9,15 +10,9 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   isAuth: boolean;
+  @ViewChild('sideNav') side: ElementRef;
   constructor(private auth: AuthService) {
-    // this.isAuth = this.auth.authState();
-    // if (this.isAuth) {
-    //   console.log('user login');
-    // } else {
-    //   console.log('user logout');
-    // }
-
-    this.auth.authListener().subscribe((user) => {
+    this.auth.authState().subscribe((user) => {
       if (user) {
         this.isAuth = true;
         console.log(user, 'login', this.isAuth);
@@ -27,11 +22,8 @@ export class AppComponent {
       }
     });
   }
-  title = 'material';
-  public onLogout() {
-    this.auth.logout().finally(() => {
-      console.log('loggout');
-      this.isAuth = false;
-    });
+
+  public onLogout(isLogout: boolean) {
+    this.isAuth = isLogout;
   }
 }

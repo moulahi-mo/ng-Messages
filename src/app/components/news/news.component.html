@@ -1,0 +1,45 @@
+<section>
+  <nav mat-tab-nav-bar class="d-flex justify-content-around">
+    <a mat-tab-link (click)="getNews()">Get Latest news</a>
+    <app-search-box
+      class="w-100"
+      (onSearch)="searchArticle($event)"
+      (onFetch)="searchForNewArticle($event)"
+    ></app-search-box>
+    <mat-divider></mat-divider>
+  </nav>
+  <div class="container-fluid">
+    <div class="row row-cols-3">
+      <div class="col my-2" *ngFor="let news of newsList; index as i" [id]="i">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image">
+              <mat-icon>menu</mat-icon>
+            </div>
+
+            <mat-card-title>{{ news.title | titlecase }} </mat-card-title>
+            <mat-card-subtitle
+              >{{ news.author | uppercase }}
+            </mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image [src]="news.urlToImage" />
+          <mat-card-content>
+            <p>
+              {{ news.content }}
+            </p>
+          </mat-card-content>
+          <mat-card-actions class="d-flex justify-content-around">
+            <button mat-raised-button color="warn" class="mr-2">edit</button>
+            <button mat-raised-button color="primary" class="mr-2">
+              delete
+            </button>
+            <a class="ml-auto d-block" mat-fab target="_blank" [href]="news.url"
+              >Read</a
+            >
+          </mat-card-actions>
+          <mat-card> {{ news.publishedAt | date: "medium" }} </mat-card>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</section>

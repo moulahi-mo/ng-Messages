@@ -1,0 +1,43 @@
+<h3 class="lead text-info mt-3">Welcome Josh</h3>
+<mat-nav-list class="mt-5">
+  <a
+    *ngIf="authState"
+    routerLink="/"
+    routerLinkActive="active"
+    routerLinkActiveOptions="{exact:true}"
+    mat-list-item
+    (click)="sideNav.close()"
+  >
+    Home <mat-icon color="primary" class="ml-2"> home </mat-icon>
+  </a>
+  <a
+    *ngIf="!authState"
+    routerLink="/signup"
+    routerLinkActive="active"
+    routerLinkActiveOptions="{exact:true}"
+    mat-list-item
+    (click)="sideNav.close()"
+  >
+    SignUp <mat-icon color="primary" class="ml-2">face </mat-icon>
+  </a>
+  <a
+    *ngIf="!authState"
+    routerLink="/login"
+    routerLinkActive="active"
+    routerLinkActiveOptions="{exact:true}"
+    mat-list-item
+    (click)="sideNav.close()"
+  >
+    SignIn <mat-icon color="primary" class="ml-2">create </mat-icon>
+  </a>
+  <a
+    *ngIf="authState"
+    routerLinkActive="active"
+    routerLinkActiveOptions="{exact:true}"
+    mat-list-item
+    (click)="sideNav.close()"
+    (click)="onLogout()"
+  >
+    Logout <mat-icon color="primary" class="ml-2"> input </mat-icon>
+  </a>
+</mat-nav-list>
