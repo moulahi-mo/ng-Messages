@@ -13,7 +13,7 @@ export class NewsApiService {
 
   constructor(private http: HttpClient) {}
 
-  public fetchNews(t: string = 'trends'): Observable<News[]> {
+  public fetchNews(t: string = 'trend'): Observable<News[]> {
     return this.http.get<News[]>(
       `http://newsapi.org/v2/everything?q=${t}&sortBy=popularity&apiKey=8b546a54510e4cfc9c94c8710cb2a7de`
     );

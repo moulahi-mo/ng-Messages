@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Observable, Observer } from 'rxjs';
 import firebase from 'firebase/app';
+import { tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
@@ -22,7 +23,11 @@ export class AuthService {
   }
 
   public authState(): Observable<any> {
-    return this.afAuth.user;
+    return this.afAuth.user.pipe(
+      tap((user) => {
+        this.isLogin = user ? true : false;
+      })
+    );
   }
   public authListener(): Observable<any> {
     const authState = Observable.create((observer: Observer<any>) => {

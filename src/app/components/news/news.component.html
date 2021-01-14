@@ -11,11 +11,9 @@
   <mat-tab-group dynamicHeight>
     <mat-tab *ngFor="let label of tabs">
       <ng-template mat-tab-label>
-        <mat-icon
-          (click)="getCategory(label)"
-          class="example-tab-icon"
-        ></mat-icon>
-        {{ label | titlecase }}
+        <a (click)="getCategory(label)" class="text-decoration-none text-dark">
+          {{ label | titlecase }}
+        </a>
       </ng-template>
 
       <section>
