@@ -32,6 +32,14 @@ import { SearchBoxComponent } from './components/search-box/search-box.component
 import { AboutComponent } from './components/about/about.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { AccountComponent } from './components/account/account.component';
+import { AuthorsComponent } from './components/authors/authors.component';
+import { PostsComponent } from './components/posts/posts.component';
+import { FavoritesService } from './services/favorites.service';
+import { AuthorsService } from './services/authors.service';
+import { SettingsService } from './services/settings.service';
+import { LocalStorageService } from './services/local-storage.service';
+import { AuthorsEditComponent } from './components/authors-edit/authors-edit.component';
+import { AuthorsAddComponent } from './components/authors-add/authors-add.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +57,10 @@ import { AccountComponent } from './components/account/account.component';
     AboutComponent,
     FavoritesComponent,
     AccountComponent,
+    AuthorsComponent,
+    PostsComponent,
+    AuthorsEditComponent,
+    AuthorsAddComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,7 +75,16 @@ import { AccountComponent } from './components/account/account.component';
     AngularFirestoreModule,
     AngularFireAuthModule,
   ],
-  providers: [MessagesService, AuthService, AuthGuard, NewsApiService],
+  providers: [
+    MessagesService,
+    AuthService,
+    AuthGuard,
+    NewsApiService,
+    FavoritesService,
+    AuthorsService,
+    SettingsService,
+    LocalStorageService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

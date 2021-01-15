@@ -1,5 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+// ! getting bootstrap costum colors :
+$theme-colors: (
+  "c1": #3f51b5,
+  "c2": #f44336,
+  "c3": #ff4081,
+);
+
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
 html,
 body {
   height: 100% !important;

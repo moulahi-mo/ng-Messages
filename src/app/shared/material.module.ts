@@ -28,8 +28,16 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   imports: [
+    MatTooltipModule,
+    MatSortModule,
+    MatTableModule,
+    MatPaginatorModule,
     MatAutocompleteModule,
     MatDialogModule,
     MatButtonToggleModule,
@@ -60,6 +68,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatBottomSheetModule,
   ],
   exports: [
+    MatTooltipModule,
+    MatSortModule,
+    MatTableModule,
+    MatPaginatorModule,
     MatAutocompleteModule,
     MatDialogModule,
     MatButtonToggleModule,

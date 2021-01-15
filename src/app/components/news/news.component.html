@@ -1,6 +1,6 @@
 <section class="mt-5">
   <nav mat-tab-nav-bar class="d-flex justify-content-around">
-    <a mat-tab-link (click)="getNews()">Get Latest news</a>
+    <a mat-tab-link (click)="getNews()" class="text-c2">Get Latest news</a>
     <app-search-box
       class="w-100"
       (onSearch)="searchArticle($event)"
@@ -70,3 +70,12 @@
     </mat-tab>
   </mat-tab-group>
 </section>
+<mat-divider></mat-divider>
+<mat-paginator
+  class="mb-5 mt-2 d-flex justify-content-center"
+  [length]="10"
+  [pageSize]="5"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+  (page)="pageEvent = getServerData($event)"
+>
+</mat-paginator>
