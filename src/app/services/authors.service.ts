@@ -4,25 +4,16 @@ import { Observable } from 'rxjs';
 import { Authors } from '../Models/interfaces';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthorsService {
+  EditedId = new Subject<string>();
   listAuthors: any[] = [];
   author: Authors;
   constructor(private afStore: AngularFirestore, private http: HttpClient) {}
 
-  // public fetchListJson(): Observable<Authors[]> {
-  //   return this.http.get<Authors[]>(
-  //     'https://jsonplaceholder.typicode.com/users'
-  //   );
-  // }
-
-  // public addAuthors(list: Authors[]): Observable<any> {
-  //   list.forEach((blogger) => {
-  //     return this.afStore.collection('authors').add(blogger);
-  //   });
-  // }
   //! get authors
   public fetchAuthors(): Observable<any> {
     return this.afStore
@@ -31,15 +22,14 @@ export class AuthorsService {
       .pipe(
         map((snaps) => {
           return snaps.map((snap) => {
-            // console.log(snap.payload.doc.data(), snap.payload.doc.id);
             return (this.author = {
               id: snap.payload.doc.id,
               name: snap.payload.doc.data().name,
               username: snap.payload.doc.data().username,
               email: snap.payload.doc.data().email,
-              status: snap?.payload.doc.data().standard,
+              status: snap?.payload.doc.data().status,
               isActive: snap?.payload.doc.data().isActive,
-              joind: snap?.payload.doc.data().joind.toDate(),
+              joind: snap?.payload.doc.data().joind,
               address: {
                 street: snap.payload.doc.data().address.street,
                 suite: snap.payload.doc.data().address.suite,
@@ -67,5 +57,15 @@ export class AuthorsService {
   //! delete author
   public deleteAuthor(id: string) {
     return this.afStore.doc<Authors>(`authors/${id}`).delete();
+  }
+  //! update author
+  public updateAuthor(item: Authors, id: string) {
+    //!create subject to emit new edited authors to make anime on that row after editing;
+    this.EditedId.next(id);
+    return this.afStore.doc<Authors>(`authors/${id}`).update(item);
+  }
+  //! get author by id
+  public getAuthorById(id: string): Observable<Authors> {
+    return this.afStore.doc<Authors>(`authors/${id}`).valueChanges();
   }
 }

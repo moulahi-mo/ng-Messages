@@ -1,1 +1,225 @@
-<p>authors-edit works!</p>
+<section class="mb-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="display-4 text-c1 text-center my-5 w-100">Add New Author</h1>
+          <i [routerLink]="['/authors']" class="material-icons large"
+            >arrow_back</i
+          >
+          <p class="text-c2 lead mb-3 ml-2 d-inline-block">Back</p>
+        </div>
+        <div class="col-12">
+          <!-- ! steper-->
+          <mat-horizontal-stepper linear #stepper class="shadow-lg rounded-lg">
+            <!-- * first ---------------------------------->
+            <mat-step [stepControl]="firstFormGroup">
+              <form
+                (ngSubmit)="firstSubmit()"
+                [formGroup]="firstFormGroup"
+                class="d-flex flex-column"
+              >
+                <ng-template matStepLabel>Personal infos & contact</ng-template>
+                <div class="d-flex justify-content-around">
+                  <mat-form-field class="w-75">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="name" />
+                  </mat-form-field>
+  
+                  <mat-form-field>
+                    <mat-label>Username</mat-label>
+                    <input matInput formControlName="username" />
+                  </mat-form-field>
+                </div>
+  
+                <mat-form-field hintLabel="email must be correct">
+                  <mat-label>Email</mat-label>
+                  <input matInput formControlName="email" />
+                  <mat-hint align="end">
+                    {{ firstFormGroup.get("phone").value.length }} /10</mat-hint
+                  >
+                  <mat-error> plz enter a valid email</mat-error>
+                </mat-form-field>
+  
+                <mat-form-field hintLabel="Phone number must be correct">
+                  <mat-label>Phone</mat-label>
+                  <input matInput formControlName="phone" />
+                  <mat-error> plz enter a valid Phone number</mat-error>
+                  <mat-hint align="end">
+                    {{ firstFormGroup.get("phone").value.length }} /13</mat-hint
+                  >
+                </mat-form-field>
+  
+                <mat-form-field>
+                  <mat-label>Website</mat-label>
+                  <input matInput formControlName="website" />
+                </mat-form-field>
+  
+                <mat-form-field>
+                  <mat-label>Status</mat-label>
+                  <mat-select formControlName="status">
+                    <mat-option *ngFor="let stat of statusList" [value]="stat">
+                      {{ stat }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+  
+                <mat-label>Activity</mat-label>
+                <mat-slide-toggle color="accent" formControlName="isActive">
+                  Inactive/Active
+                </mat-slide-toggle>
+  
+                <mat-form-field appearance="standard">
+                  <mat-label>Birth date</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    formControlName="joind"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+  
+                <div>
+                  <button mat-raised-button color="warn" matStepperNext>
+                    Next
+                  </button>
+                </div>
+              </form>
+            </mat-step>
+            <!-- * seconde ---------------------------------->
+            <mat-step [stepControl]="secondFormGroup">
+              <form
+                (ngSubmit)="secondSubmit()"
+                [formGroup]="secondFormGroup"
+                class="d-flex flex-column justify-content-around"
+              >
+                <ng-template matStepLabel>address & company</ng-template>
+  
+                <!-- ? Adresss--------------------------------------------------------------------------------------------->
+  
+                <mat-accordion multi>
+                  <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title> Address </mat-panel-title>
+                      <mat-panel-description
+                        class="d-flex justify-content-between"
+                      >
+                        Address Infos
+                        <mat-icon color="primary">contact_mail</mat-icon>
+                      </mat-panel-description>
+                    </mat-expansion-panel-header>
+  
+                    <div
+                      formGroupName="address"
+                      class="d-flex justify-content-around"
+                    >
+                      <mat-form-field>
+                        <mat-label>City</mat-label>
+                        <input matInput formControlName="city" />
+                      </mat-form-field>
+  
+                      <mat-form-field>
+                        <mat-label>Street</mat-label>
+                        <input matInput formControlName="street" />
+                      </mat-form-field>
+  
+                      <mat-form-field>
+                        <mat-label>Zip code</mat-label>
+                        <input matInput formControlName="zipcode" />
+                      </mat-form-field>
+                    </div>
+                  </mat-expansion-panel>
+                </mat-accordion>
+  
+                <!-- ? Company --------------------------------------------------------------------------------------------->
+                <mat-accordion multi class="my-5">
+                  <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title> Company </mat-panel-title>
+                      <mat-panel-description
+                        class="d-flex justify-content-between"
+                      >
+                        Company Infos
+                        <mat-icon color="primary">account_circle</mat-icon>
+                      </mat-panel-description>
+                    </mat-expansion-panel-header>
+  
+                    <div
+                      formGroupName="company"
+                      class="d-flex justify-content-around"
+                    >
+                      <mat-form-field>
+                        <mat-label>Name</mat-label>
+                        <input matInput formControlName="name" />
+                      </mat-form-field>
+  
+                      <mat-form-field>
+                        <mat-label>Quote</mat-label>
+                        <input matInput formControlName="catchPhrase" />
+                      </mat-form-field>
+                    </div>
+                  </mat-expansion-panel>
+                </mat-accordion>
+  
+                <div>
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    matStepperPrevious
+                    class="mr-4"
+                  >
+                    Back
+                  </button>
+                  <button mat-raised-button color="warn" matStepperNext>
+                    Next
+                  </button>
+                </div>
+              </form>
+            </mat-step>
+            <!-- * done confirmation ---------------------------------->
+            <mat-step [stepControl]="finalFormGroup">
+              <form
+                (ngSubmit)="finalSubmit()"
+                [formGroup]="finalFormGroup"
+                class="d-flex flex-column justify-content-around"
+              >
+                <ng-template matStepLabel>Done</ng-template>
+                <p class="lead text-c1">You are now done.!</p>
+                <mat-checkbox matInput formControlName="agree">
+                  agree whith rules</mat-checkbox
+                >
+                <div class="d-flex justify-content-between mt-3">
+                  <div>
+                    <button
+                      mat-raised-button
+                      color="primary"
+                      matStepperPrevious
+                      class="mr-4"
+                    >
+                      Back
+                    </button>
+                    <button mat-button (click)="stepper.reset()">Reset</button>
+                  </div>
+                  <div>
+                    <button
+                      [disabled]="!finalFormGroup.get('agree').value"
+                      mat-raised-button
+                      color="accent"
+                      type="submit"
+                      class=""
+                    >
+                      Done
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+          </mat-horizontal-stepper>
+        </div>
+      </div>
+    </div>
+  </section>
+  

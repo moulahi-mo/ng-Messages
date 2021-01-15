@@ -26,7 +26,7 @@ export interface Authors {
   email: string;
   status?: string;
   isActive?: boolean;
-  joind?: Date;
+  joind?: Date | string;
   created?: Date;
   address: {
     street: string;

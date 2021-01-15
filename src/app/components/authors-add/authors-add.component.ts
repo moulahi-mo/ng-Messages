@@ -26,7 +26,7 @@ export class AuthorsAddComponent implements OnInit {
   step1: {} = {};
   step2: {} = {};
   steps: any;
-  statusList: string[] = ['standard', 'premium', 'vip'];
+  statusList: [string, string, string] = ['standard', 'premium', 'vip'];
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   constructor(
@@ -87,23 +87,26 @@ export class AuthorsAddComponent implements OnInit {
     this.steps = { ...this.step1, ...this.step2, created: new Date() };
     console.log(this.steps);
     //! add author to db
-    this.AuthorsService.addAuthor(this.steps).then(
-      (res) => {
+    this.AuthorsService.addAuthor(this.steps)
+      .then((res) => {
         console.log(res, 'added to db');
         //? after adding to db
-        this.snackBar.open('Author added successfully !', 'undo', {
-          duration: 3000,
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-        });
+        this.snackBar.open(
+          `${this.steps.name} is added successfully !`,
+          'undo',
+          {
+            duration: 3000,
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          }
+        );
         //? reset forms
         this.firstFormGroup.reset();
         this.secondFormGroup.reset();
         this.finalFormGroup.reset();
         //? navigate to authors page
         this.route.navigate(['/authors']);
-      },
-      (err) => (this.isError = err)
-    );
+      })
+      .catch((err) => (this.isError = err));
   }
 }
