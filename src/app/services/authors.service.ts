@@ -23,7 +23,7 @@ export class AuthorsService {
   //     return this.afStore.collection('authors').add(blogger);
   //   });
   // }
-
+  //! get authors
   public fetchAuthors(): Observable<any> {
     return this.afStore
       .collection('authors')
@@ -37,18 +37,14 @@ export class AuthorsService {
               name: snap.payload.doc.data().name,
               username: snap.payload.doc.data().username,
               email: snap.payload.doc.data().email,
-              status: 'standard',
-              isActive: true,
-              joind: new Date(),
+              status: snap?.payload.doc.data().standard,
+              isActive: snap?.payload.doc.data().isActive,
+              joind: snap?.payload.doc.data().joind.toDate(),
               address: {
                 street: snap.payload.doc.data().address.street,
                 suite: snap.payload.doc.data().address.suite,
                 city: snap.payload.doc.data().address.city,
                 zipcode: snap.payload.doc.data().address.zipcode,
-                geo: {
-                  lat: snap.payload.doc.data().address.geo.lat,
-                  lng: snap.payload.doc.data().address.geo.lng,
-                },
               },
               phone: snap.payload.doc.data().phone,
               website: snap.payload.doc.data().website,
@@ -59,8 +55,17 @@ export class AuthorsService {
               },
             });
           });
-          console.log(this.listAuthors);
         })
       );
+  }
+
+  //! add author
+
+  public addAuthor(person: Authors) {
+    return this.afStore.collection('authors').add(person);
+  }
+  //! delete author
+  public deleteAuthor(id: string) {
+    return this.afStore.doc<Authors>(`authors/${id}`).delete();
   }
 }

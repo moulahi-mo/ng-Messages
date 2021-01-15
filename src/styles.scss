@@ -19,6 +19,7 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   color: black !important;
 }
+mat-icon,
 button,
 a,
 i,
@@ -27,6 +28,7 @@ svg {
   outline: 0 !important;
   cursor: pointer;
 }
-mat-icon {
+mat-icon,
+i {
   cursor: pointer;
 }

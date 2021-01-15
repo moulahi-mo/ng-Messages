@@ -5,7 +5,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Authors } from 'src/app/Models/interfaces';
 
 import { AuthorsService } from '../../services/authors.service';
-
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 @Component({
   selector: 'app-authors',
   templateUrl: './authors.component.html',
@@ -15,6 +19,7 @@ export class AuthorsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource = new MatTableDataSource<Authors>();
+  isError: string = null;
   displayedColumns: string[] = [
     'id',
     'name',
@@ -25,7 +30,9 @@ export class AuthorsComponent implements OnInit {
     'details',
   ];
   listAuthors: Authors[] = [];
-  constructor(private blogS: AuthorsService) {}
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+  constructor(private snackBar: MatSnackBar, private blogS: AuthorsService) {}
 
   ngOnInit(): void {
     this.getAuthors();
@@ -46,7 +53,21 @@ export class AuthorsComponent implements OnInit {
     console.log(term);
     this.dataSource.filter = term;
   }
-  public forEdit(el) {
-    console.log(el);
+
+  public forDelete(id: string) {
+    console.log(id);
+    if (confirm('Are you sure ??')) {
+      this.blogS
+        .deleteAuthor(id)
+        .then(() => {
+          //? after deleting author
+          this.snackBar.open('Author deleted successfully !', 'undo', {
+            duration: 4000,
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+        })
+        .catch((err) => (this.isError = err));
+    }
   }
 }

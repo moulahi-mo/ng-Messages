@@ -3,13 +3,21 @@
     <h1 class="text-center text-c1 my-3">Our Bloggers</h1>
 
     <div class="row">
-      <div class="col-12">
+      <div class="col-12 d-flex">
         <mat-form-field
           (keyup)="onFiltring($event.target.value)"
-          class="mx-auto d-block my-3"
+          class="mx-auto d-block my-3 w-100"
         >
           <input matInput type="text" placeholder="Filter.." />
         </mat-form-field>
+        <mat-icon
+          matTooltip="Add Author"
+          matTooltipPosition="above"
+          color="warn"
+          class="h1 align-self-center ml-3"
+          [routerLink]="['/authors', 'add']"
+          >add</mat-icon
+        >
       </div>
       <div class="col-12">
         <!--! TABLE ------------------------------>
@@ -68,14 +76,15 @@
                 <mat-icon
                   matTooltip="Edit Author"
                   matTooltipPosition="above"
-                  (click)="forEdit(element)"
+                  [routerLink]="['/authors', 'edit', element.id]"
                   color="accent"
                   class="mr-2"
                   >description</mat-icon
                 >
                 <mat-icon
+                  (click)="forDelete(element.id)"
                   matTooltip="delete Author"
-                  matTooltipPosition="right"
+                  matTooltipPosition="above"
                   color="warn"
                   >delete_sweep</mat-icon
                 >
@@ -93,6 +102,7 @@
             <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr> -->
           </table>
           <mat-paginator
+            class="d-flex justify-content-center"
             [pageSize]="5"
             [pageSizeOptions]="[5, 10, 20]"
             showFirstLastButtons
