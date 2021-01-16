@@ -1,24 +1,24 @@
 <section class="my-2 ml-auto d-flex justify-content-around">
   <!-- search inside articles-->
-  <mat-card>
-    <form [formGroup]="searchForm" (keyup)="onSubmit()">
-      <mat-form-field apparence="fill" color="warn">
-        <input
-          name="term"
-          type="text"
-          placeholder="search for articles.."
-          matInput
-          formControlName="term"
-          [matAutocomplete]="auto"
-        />
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let option of tags" [value]="option">
-            {{ option }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-    </form>
-  </mat-card>
+
+  <form [formGroup]="searchForm" (keyup)="onSubmit()">
+    <mat-form-field apparence="fill" color="accent">
+      <input
+        name="term"
+        type="text"
+        placeholder="Filter articles.."
+        matInput
+        formControlName="term"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of tags" [value]="option">
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+
   <!-- fetch articles-->
   <form [formGroup]="fetchForm" (ngSubmit)="onFetching()">
     <mat-form-field apparence="fill" color="primary">
@@ -26,7 +26,7 @@
         matInput
         name="term"
         type="text"
-        placeholder="search .."
+        placeholder="Search .."
         formControlName="query"
       />
     </mat-form-field>

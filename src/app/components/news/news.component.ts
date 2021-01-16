@@ -9,6 +9,12 @@ import {
 } from '@angular/material/paginator';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-news',
   templateUrl: './news.component.html',
@@ -17,6 +23,8 @@ import { MatTableDataSource } from '@angular/material/table';
 export class NewsComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<News>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   // MatPaginator Output
   datasource: any[] = [];
   pageEvent: PageEvent;
@@ -32,7 +40,7 @@ export class NewsComponent implements OnInit, AfterViewInit {
     'science',
     'sports',
   ];
-  constructor(private nw: NewsApiService) {}
+  constructor(private nw: NewsApiService, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.newsCard = {
@@ -46,11 +54,17 @@ export class NewsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.getNews('trend');
+    this.getNews('general');
     this.paginator.page.subscribe((event) => console.log(event));
   }
   public getNews(t?: string) {
     this.nw.fetchNews(t).subscribe((data) => {
+      //!show the message snackbar
+      this.snackBar.open('Getting articles...', 'undo', {
+        duration: 4000,
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
       console.log(data.articles);
       this.newsList = data.articles;
       this.datasource = this.newsList;
@@ -82,6 +96,12 @@ export class NewsComponent implements OnInit, AfterViewInit {
   }
 
   public getCategory(label: string) {
+    //!show the message snackbar
+    this.snackBar.open('Getting articles...', 'undo', {
+      duration: 4000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
     console.log('tab selected');
     this.nw.fetchNewsByCategory(label).subscribe((data) => {
       console.log(data);

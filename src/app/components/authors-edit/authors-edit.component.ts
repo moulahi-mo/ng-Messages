@@ -11,7 +11,7 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+
 import { AuthorsService } from 'src/app/services/authors.service';
 
 @Component({
@@ -126,6 +126,7 @@ export class AuthorsEditComponent implements OnInit, AfterViewInit {
     // ! confirm edit and send it to db
     this.authorService.updateAuthor(this.steps, this.index).then(() => {
       console.log('updated');
+
       //? after adding to db
       this.snackBar.open(` ${this.steps.name} updated successfully !`, 'undo', {
         duration: 4000,

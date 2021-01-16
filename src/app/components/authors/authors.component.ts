@@ -21,6 +21,7 @@ export class AuthorsComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
   dataSource = new MatTableDataSource<Authors>();
   isError: string = null;
+  idToAnimate: string = null;
   displayedColumns: string[] = [
     'username',
     'name',

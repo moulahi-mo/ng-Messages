@@ -76,6 +76,7 @@
               <th mat-header-cell *matHeaderCellDef>Details</th>
               <td mat-cell *matCellDef="let element">
                 <mat-icon
+                  (click)="toAnimate(element.id)"
                   matTooltip="Edit Author"
                   matTooltipPosition="above"
                   [routerLink]="['/authors', 'edit', element.id]"
