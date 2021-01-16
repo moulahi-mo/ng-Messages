@@ -1,1 +1,45 @@
-<p>favorites works!</p>
+<section class="mt-5">
+  <div class="container-fluid">
+    <div class="row m-auto d-flex justify-content-center mb-3">
+      <h3 class="text-center text-c3 display-4 mt-3">Favorites</h3>
+      <mat-icon color="accent" class="display-4">bookmarks</mat-icon>
+    </div>
+    <mat-divider class="mb-3"></mat-divider>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+      <div
+        class="col my-2 mx-auto"
+        *ngFor="let news of favoritesList; index as i"
+        [id]="i"
+      >
+        <mat-card class="shadow-lg rounded-lg">
+          <mat-card-header>
+            <mat-card-title>{{ news.title | titlecase }} </mat-card-title>
+            <mat-card-subtitle
+              >{{ news.author | uppercase }}
+            </mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image class="img-fluid" [src]="news.urlToImage" />
+          <mat-card-content>
+            <p>
+              {{ news.content }}
+            </p>
+          </mat-card-content>
+          <mat-card-actions class="d-flex justify-content-around">
+            <button
+              (click)="removeFav(news.uuid)"
+              mat-raised-button
+              color="primary"
+              class="mr-2 py-1"
+            >
+              Remove from favorites
+            </button>
+            <a class="ml-auto d-block" mat-fab target="_blank" [href]="news.url"
+              >Read</a
+            >
+          </mat-card-actions>
+          <p>{{ news.publishedAt | date: "medium" }}</p>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</section>

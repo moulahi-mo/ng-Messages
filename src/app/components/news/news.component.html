@@ -1,5 +1,10 @@
 <section class="mt-5">
-  <nav mat-tab-nav-bar class="d-flex justify-content-around">
+  <div class="row m-auto d-flex justify-content-center mb-3">
+    <h3 class="text-center text-c3 display-4 mt-3">Latest News</h3>
+    <mat-icon color="accent" class="display-4">new_releases</mat-icon>
+  </div>
+
+  <nav mat-tab-nav-bar class="d-flex justify-content-around" *ngIf="!isLoading">
     <app-search-box
       class="w-100"
       (onSearch)="searchArticle($event)"
@@ -14,8 +19,15 @@
           {{ label | titlecase }}
         </a>
       </ng-template>
+      <!-- ! progress bar ------------------->
+      <mat-progress-bar
+        *ngIf="isLoading"
+        mode="query"
+        class="my-5"
+        color="accent"
+      ></mat-progress-bar>
 
-      <section>
+      <section *ngIf="!isLoading">
         <div class="container-fluid">
           <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
             <div
@@ -23,12 +35,13 @@
               *ngFor="let news of newsList; index as i"
               [id]="i"
             >
-              <mat-card class="example-card">
+              <mat-card class="shadow-lg rounded-lg">
                 <mat-card-header>
                   <div mat-card-avatar class="example-header-image">
                     <mat-icon
-                      (click)="isFavorite = !isFavorite"
-                      [color]="isFavorite && i === 2 ? 'primary' : 'warn'"
+                      #heart
+                      (click)="forFavorite(news, i)"
+                      [color]="news.isFav ? 'primary' : 'warn'"
                     >
                       favorite</mat-icon
                     >
@@ -46,21 +59,15 @@
                   </p>
                 </mat-card-content>
                 <mat-card-actions class="d-flex justify-content-around">
-                  <button mat-raised-button color="warn" class="mr-2">
-                    edit
-                  </button>
-                  <button mat-raised-button color="primary" class="mr-2">
-                    delete
-                  </button>
                   <a
-                    class="ml-auto d-block"
+                    class="mx-auto d-block"
                     mat-fab
                     target="_blank"
                     [href]="news.url"
                     >Read</a
                   >
                 </mat-card-actions>
-                <mat-card> {{ news.publishedAt | date: "medium" }} </mat-card>
+                <p>{{ news.publishedAt | date: "medium" }}</p>
               </mat-card>
             </div>
           </div>

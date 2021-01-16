@@ -11,12 +11,14 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
+import { SettingsService } from 'src/app/services/settings.service';
 @Component({
   selector: 'app-authors',
   templateUrl: './authors.component.html',
   styleUrls: ['./authors.component.scss'],
 })
 export class AuthorsComponent implements OnInit, OnDestroy {
+  mySettings: string[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource = new MatTableDataSource<Authors>();
@@ -36,10 +38,15 @@ export class AuthorsComponent implements OnInit, OnDestroy {
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   rowToAnimate: string;
   sub: Subscription;
-  constructor(private snackBar: MatSnackBar, private blogS: AuthorsService) {}
+  constructor(
+    private snackBar: MatSnackBar,
+    private blogS: AuthorsService,
+    private sett: SettingsService
+  ) {}
 
   ngOnInit(): void {
     this.getAuthors();
+    this.getSettings();
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -79,7 +86,11 @@ export class AuthorsComponent implements OnInit, OnDestroy {
         .catch((err) => (this.isError = err));
     }
   }
-
+  public getSettings() {
+    this.sett.getSettings().subscribe((data) => {
+      this.mySettings = data.authors;
+    });
+  }
   ngOnDestroy() {
     // this.sub.unsubscribe();
   }

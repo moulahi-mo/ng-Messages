@@ -11,7 +11,9 @@
 
     <span>
       <mat-icon color="primary" class="h2 mt-3 mx-2">portrait</mat-icon>
-      <span class="lead pb-3 ml-2 d-inline-block"> Landing Page </span>
+      <span class="lead pb-3 ml-2 d-inline-block">
+        {{ newTitle | titlecase }}
+      </span>
     </span>
     <!-- links -->
     <mat-nav-list class="m-auto d-flex">
@@ -36,7 +38,7 @@
         >
       </mat-list-item>
 
-      <mat-list-item>
+      <mat-list-item *ngIf="!hideAuthors">
         <a
           class=""
           mat-list-item
@@ -71,7 +73,12 @@
         mat-icon-button
         class="favorite-icon"
       >
-        <mat-icon color="" class="h3">favorite</mat-icon>
+        <mat-icon
+          [matBadge]="badge <= 0 || !badge ? null : badge"
+          matBadgeColor="primary"
+          class="h3"
+          >favorite</mat-icon
+        >
       </button>
       <button
         [matMenuTriggerFor]="menu"

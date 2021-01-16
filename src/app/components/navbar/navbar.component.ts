@@ -3,6 +3,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
+import { SettingsService } from 'src/app/services/settings.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -13,16 +14,21 @@ export class NavbarComponent implements OnInit {
   @Output() onSignOut: EventEmitter<boolean> = new EventEmitter();
   @Input() sideNav: MatSidenav;
   @Input() authState: boolean;
+  hideSignup: boolean;
   // @Output()
   constructor(
     private auth: AuthService,
     private route: Router,
-    private _flashMessagesService: FlashMessagesService
+    private _flashMessagesService: FlashMessagesService,
+    private sett: SettingsService
   ) {}
 
   ngOnInit(): void {
     this.authState = true;
     console.log(this.authState);
+    this.sett.getSettings().subscribe((data) => {
+      this.hideSignup = data.registration === 'restrict' ? true : false;
+    });
   }
 
   public onLogout() {

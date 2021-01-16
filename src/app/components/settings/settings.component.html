@@ -1,1 +1,84 @@
-<p>settings works!</p>
+<section class="my-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <mat-card class="shadow-lg rounded-lg w-100">
+          <mat-card-header class="w-100 d-flex justify-content-center">
+            <div class="text-center mx-auto text-c2 display-4 w-100">
+              Manage Settings
+              <mat-icon class="display-4" color="warn"> policy</mat-icon>
+            </div>
+          </mat-card-header>
+          <form #settingForm="ngForm" (ngSubmit)="onSubmit(settingForm)">
+            <mat-card-content>
+              <mat-grid-list cols="2" rowHeight="2:1">
+                <mat-grid-tile class="title">
+                  <mat-radio-group class="title" ngModel name="registration">
+                    <label class="lead text-c1"> Registration : </label>
+                    <mat-radio-button value="allow" class="mr-2"
+                      >Allow Signup</mat-radio-button
+                    >
+                    <mat-radio-button value="restrict"
+                      >Restrict Signup</mat-radio-button
+                    >
+                  </mat-radio-group>
+                </mat-grid-tile>
+
+                <mat-grid-tile class="title d-flex flex-column">
+                  <label class="lead text-c1"> Authors : </label>
+                  <mat-form-field appearance="standard" color="accent">
+                    <mat-label>Disable</mat-label>
+                    <mat-select multiple ngModel name="authors">
+                      <mat-option
+                        *ngFor="let topping of toppingList"
+                        [value]="topping"
+                        >{{ topping }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile class="title">
+                  <label class="lead text-c1"> Posts : </label>
+                  <mat-selection-list #selectP ngModel name="posts">
+                    <mat-list-option
+                      *ngFor="let post of posts"
+                      (click)="fire(post)"
+                      [value]="post"
+                    >
+                      {{ post }}
+                    </mat-list-option>
+                  </mat-selection-list>
+                </mat-grid-tile>
+                <mat-grid-tile class="title">
+                  <label class="lead text-c1">
+                    Change the welcome title :
+                  </label>
+                  <mat-form-field color="accent">
+                    <mat-label>New title</mat-label>
+                    <input
+                      minlength="5"
+                      matInput
+                      value=""
+                      ngModel
+                      name="title"
+                      #title="ngModel"
+                    />
+                  </mat-form-field>
+                  <mat-hint *ngIf="title.errors?.minlength && title.touched"
+                    >Title must be at least 5 chars</mat-hint
+                  >
+                </mat-grid-tile>
+              </mat-grid-list>
+            </mat-card-content>
+
+            <mat-card-actions class="d-flex justify-content-around">
+              <button type="submit" mat-fab color="warn" class="mr-2 py-1">
+                Apply
+              </button>
+            </mat-card-actions>
+          </form>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</section>

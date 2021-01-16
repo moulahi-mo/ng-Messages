@@ -34,8 +34,15 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatRadioModule } from '@angular/material/radio';
+
 @NgModule({
   imports: [
+    MatRadioModule,
+    MatGridListModule,
+    MatTreeModule,
     MatExpansionModule,
     MatStepperModule,
     MatTooltipModule,
@@ -72,6 +79,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatBottomSheetModule,
   ],
   exports: [
+    MatRadioModule,
+    MatGridListModule,
+    MatTreeModule,
     MatExpansionModule,
     MatStepperModule,
     MatTooltipModule,

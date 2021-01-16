@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 
 import { AuthService } from './services/auth.service';
+import { FavoritesService } from './services/favorites.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   isAuth: boolean;
   @ViewChild('sideNav') side: ElementRef;
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService, private fav: FavoritesService) {
     this.auth.authState().subscribe((user) => {
       if (user) {
         this.isAuth = true;
@@ -21,6 +22,7 @@ export class AppComponent {
         console.log(user, 'logout', this.isAuth);
       }
     });
+    this.fav.getFavorites();
   }
 
   public onLogout(isLogout: boolean) {

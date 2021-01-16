@@ -14,23 +14,35 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
-
+import { FavoritesService } from 'src/app/services/favorites.service';
+import { Subject } from 'rxjs';
+import { uniqueid } from '../../shared/functions';
+import { MatIcon } from '@angular/material/icon';
 @Component({
   selector: 'app-news',
   templateUrl: './news.component.html',
   styleUrls: ['./news.component.scss'],
 })
 export class NewsComponent implements OnInit, AfterViewInit {
+  @ViewChild('heart') heart: MatIcon;
+  emitFavorite = new Subject<number>();
   dataSource: MatTableDataSource<News>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   // MatPaginator Output
+  isError: string = null;
+  favList = new Set(['']);
+  firestoreKey: string;
+  isUpdated: boolean = false;
+  item: News | any;
   datasource: any[] = [];
   pageEvent: PageEvent;
   isFavorite: boolean = false;
+  index: string | number;
   newsCard: News;
   newsList: News[] = [];
+  isLoading: boolean = false;
   tabs: string[] = [
     'general',
     'technology',
@@ -40,10 +52,17 @@ export class NewsComponent implements OnInit, AfterViewInit {
     'science',
     'sports',
   ];
-  constructor(private nw: NewsApiService, private snackBar: MatSnackBar) {}
+  constructor(
+    private nw: NewsApiService,
+    private snackBar: MatSnackBar,
+    private fav: FavoritesService
+  ) {}
 
   ngOnInit(): void {
+    this.fav.getFavorites().subscribe();
     this.newsCard = {
+      isFav: false,
+      uuid: uniqueid(),
       author: null,
       title: null,
       content: null,
@@ -58,6 +77,7 @@ export class NewsComponent implements OnInit, AfterViewInit {
     this.paginator.page.subscribe((event) => console.log(event));
   }
   public getNews(t?: string) {
+    this.isLoading = true;
     this.nw.fetchNews(t).subscribe((data) => {
       //!show the message snackbar
       this.snackBar.open('Getting articles...', 'undo', {
@@ -67,6 +87,12 @@ export class NewsComponent implements OnInit, AfterViewInit {
       });
       console.log(data.articles);
       this.newsList = data.articles;
+      //!! adding uid for articles
+      this.newsList = this.newsList.map((item) => {
+        return { ...item, uuid: uniqueid(), isFav: false };
+      });
+      this.isLoading = false;
+
       this.datasource = this.newsList;
 
       this.dataSource = data.articles;
@@ -93,9 +119,13 @@ export class NewsComponent implements OnInit, AfterViewInit {
   public searchForNewArticle(list: News[]) {
     console.log(list);
     this.newsList = list;
+    this.newsList = this.newsList.map((item) => {
+      return { ...item, uuid: uniqueid(), isFav: false };
+    });
   }
 
   public getCategory(label: string) {
+    this.isLoading = true;
     //!show the message snackbar
     this.snackBar.open('Getting articles...', 'undo', {
       duration: 4000,
@@ -106,10 +136,50 @@ export class NewsComponent implements OnInit, AfterViewInit {
     this.nw.fetchNewsByCategory(label).subscribe((data) => {
       console.log(data);
       this.newsList = data.articles;
+      this.newsList = this.newsList.map((item) => {
+        return { ...item, uuid: uniqueid(), isFav: false };
+      });
+      this.isLoading = false;
     });
   }
   public getServerData(e: PageEvent) {
     // console.log(e);
     return (this.dataSource.paginator = this.paginator);
+  }
+  public forFavorite(news: News, i: number) {
+    this.isFavorite = !news.isFav;
+    this.index = news.uuid;
+    this.item = { ...news, id: i, addedDate: new Date() };
+    //! add favorite to db if fav clicked
+    if (this.isFavorite) {
+      this.fav.addToFavorite(this.item).subscribe(
+        (res) => {
+          console.log(res, 'fav added', news.uuid);
+
+          news.isFav = true;
+          //* ppoup after adding favorite
+          this.snackBar.open('added to favorites', 'undo', {
+            duration: 4000,
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: 'bottom',
+          });
+        },
+        (err) => (this.isError = err)
+      );
+    }
+    //! if favorie icon decoched
+    else if (!this.isFavorite) {
+      this.fav.removeFavorite(news.uuid).subscribe((res) => {
+        console.log('removed favorite', news.uuid);
+
+        news.isFav = false;
+        //* ppoup after adding favorite
+        this.snackBar.open('remove from favorites', 'undo', {
+          duration: 4000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: 'bottom',
+        });
+      });
+    }
   }
 }

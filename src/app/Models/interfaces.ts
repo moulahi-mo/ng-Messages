@@ -9,6 +9,10 @@ export interface Login {
   password: string;
 }
 export type News = {
+  isFav: boolean;
+  uuid?: string;
+  key?: string;
+  id?: number | string;
   description?: string;
   source?: object;
   author: string;
@@ -17,6 +21,7 @@ export type News = {
   publishedAt: Date;
   url: string;
   urlToImage: string;
+  addedDate?: Date;
 };
 
 export interface Authors {
@@ -45,4 +50,11 @@ export interface Authors {
     catchPhrase: string;
     bs: string;
   };
+}
+
+export interface Settings {
+  registration: string | boolean;
+  authors: string[];
+  posts: string[];
+  title: string;
 }

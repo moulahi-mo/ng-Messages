@@ -64,6 +64,7 @@ export class SearchBoxComponent implements OnInit {
         this.listSearch = data.articles;
         console.log(this.listSearch);
         this.onFetch.emit(this.listSearch);
+        this.fetchForm.reset();
       },
       (err) => (this.isError = err)
     );
