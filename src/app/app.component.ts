@@ -22,7 +22,7 @@ export class AppComponent {
         console.log(user, 'logout', this.isAuth);
       }
     });
-    this.fav.getFavorites();
+    this.fav.getFavorites().subscribe();
   }
 
   public onLogout(isLogout: boolean) {

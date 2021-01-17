@@ -16,6 +16,7 @@ import { PostsComponent } from './components/posts/posts.component';
 import { AuthorsComponent } from './components/authors/authors.component';
 import { AuthorsAddComponent } from './components/authors-add/authors-add.component';
 import { AuthorsEditComponent } from './components/authors-edit/authors-edit.component';
+
 const routes: Routes = [
   { path: '', component: PostsComponent },
   { path: 'authors', component: AuthorsComponent, canActivate: [AuthGuard] },

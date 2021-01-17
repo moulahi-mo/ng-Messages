@@ -1,16 +1,27 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+  OnDestroy,
+} from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { SettingsService } from 'src/app/services/settings.service';
+import { FavoritesService } from 'src/app/services/favorites.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   isLogout: boolean = false;
+  badge: number = 0;
+  unsb: Subscription;
   @Output() onSignOut: EventEmitter<boolean> = new EventEmitter();
   @Input() sideNav: MatSidenav;
   @Input() authState: boolean;
@@ -20,14 +31,24 @@ export class NavbarComponent implements OnInit {
     private auth: AuthService,
     private route: Router,
     private _flashMessagesService: FlashMessagesService,
-    private sett: SettingsService
+    private sett: SettingsService,
+    private fav: FavoritesService
   ) {}
 
   ngOnInit(): void {
-    this.authState = true;
     console.log(this.authState);
     this.sett.getSettings().subscribe((data) => {
       this.hideSignup = data.registration === 'restrict' ? true : false;
+    });
+
+    // ! get subject for favorite number
+    this.fav.numberOfFavorites.subscribe((n) => {
+      this.badge = n;
+    });
+
+    this.unsb = this.fav.emitFavorite.subscribe((num) => {
+      console.log('heart', num);
+      this.badge += num;
     });
   }
 
@@ -42,5 +63,8 @@ export class NavbarComponent implements OnInit {
       console.log('loggout');
       this.onSignOut.emit(false);
     });
+  }
+  ngOnDestroy() {
+    this.unsb.unsubscribe();
   }
 }

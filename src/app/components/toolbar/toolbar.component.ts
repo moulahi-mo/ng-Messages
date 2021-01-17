@@ -5,7 +5,14 @@ import { Subscription } from 'rxjs';
 import { News } from 'src/app/Models/interfaces';
 
 import { SettingsService } from 'src/app/services/settings.service';
-import { subscribeOn } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
@@ -17,15 +24,21 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   badge: number = 0;
   unsb: Subscription;
   newTitle: string;
+  @Input() authState: boolean;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   @Input() sideNav: MatSidenav;
 
   constructor(
     private fav: FavoritesService,
-
-    private sett: SettingsService
+    private auth: AuthService,
+    private sett: SettingsService,
+    private route: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
+    // ! get subject for favorite number
     this.fav.numberOfFavorites.subscribe((n) => {
       this.badge = n;
     });
@@ -34,7 +47,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       console.log('heart', num);
       this.badge += num;
     });
-
+    // ! get hide authors from settings
     this.sett.getSettings().subscribe((data) => {
       this.hideAuthors = data.authors.includes('Hide authors section')
         ? true
@@ -45,7 +58,20 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     });
   }
 
+  public onLogout() {
+    this.auth.logout().then(() => {
+      this.snackBar.open('Sign out ..', 'undo', {
+        duration: 4000,
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
+
+      this.route.navigate(['/login']);
+    });
+  }
+  // ! unsbscribe
+
   ngOnDestroy() {
-    // this.unsb.unsubscribe();
+    this.unsb.unsubscribe();
   }
 }

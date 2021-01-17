@@ -1,44 +1,149 @@
-<h3 class="lead text-info mt-3">Welcome Josh</h3>
-<mat-nav-list class="mt-5">
-  <a
-    *ngIf="authState"
-    routerLink="/"
-    routerLinkActive="active"
-    routerLinkActiveOptions="{exact:true}"
-    mat-list-item
-    (click)="sideNav.close()"
-  >
-    Home <mat-icon color="primary" class="ml-2"> home </mat-icon>
-  </a>
-  <a
-    [hidden]="hideSignup"
-    *ngIf="!authState"
-    routerLink="/signup"
-    routerLinkActive="active"
-    routerLinkActiveOptions="{exact:true}"
-    mat-list-item
-    (click)="sideNav.close()"
-  >
-    SignUp <mat-icon color="primary" class="ml-2">face </mat-icon>
-  </a>
-  <a
-    *ngIf="!authState"
-    routerLink="/login"
-    routerLinkActive="active"
-    routerLinkActiveOptions="{exact:true}"
-    mat-list-item
-    (click)="sideNav.close()"
-  >
-    SignIn <mat-icon color="primary" class="ml-2">create </mat-icon>
-  </a>
-  <a
-    *ngIf="authState"
-    routerLinkActive="active"
-    routerLinkActiveOptions="{exact:true}"
-    mat-list-item
-    (click)="sideNav.close()"
-    (click)="onLogout()"
-  >
-    Logout <mat-icon color="primary" class="ml-2"> input </mat-icon>
-  </a>
-</mat-nav-list>
+<section class="mt-5">
+  <div class="d-flex justify-content-around">
+    <h3 class="lead font-weith-normal text-c2 my-2">Welcome Josh</h3>
+    <button
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      routerLink="/favorites"
+      mat-icon-button
+      color="accent"
+      class="favorite-icon"
+      *ngIf="authState"
+      (click)="sideNav.close()"
+    >
+      <mat-icon
+        [matBadge]="badge <= 0 || !badge ? null : badge"
+        matBadgeColor="primary"
+        class="h3"
+        >favorite</mat-icon
+      >
+    </button>
+  </div>
+
+  <mat-divider class="my-3"></mat-divider>
+  <mat-nav-list class="">
+    <mat-list-item *ngIf="authState">
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        routerLinkActiveOptions="{exact:true}"
+        mat-list-item
+        (click)="sideNav.close()"
+      >
+        Home <mat-icon color="primary" class="ml-2"> home </mat-icon>
+      </a>
+    </mat-list-item>
+
+    <mat-list-item [hidden]="hideSignup" *ngIf="!authState">
+      <a
+        routerLink="/signup"
+        routerLinkActive="active"
+        routerLinkActiveOptions="{exact:true}"
+        mat-list-item
+        (click)="sideNav.close()"
+      >
+        SignUp <mat-icon color="primary" class="ml-2">face </mat-icon>
+      </a>
+    </mat-list-item>
+
+    <mat-list-item *ngIf="!authState">
+      <a
+        routerLink="/login"
+        routerLinkActive="active"
+        routerLinkActiveOptions="{exact:true}"
+        mat-list-item
+        (click)="sideNav.close()"
+      >
+        SignIn <mat-icon color="primary" class="ml-2">create </mat-icon>
+      </a>
+    </mat-list-item>
+
+    <mat-list-item *ngIf="authState">
+      <a
+        routerLinkActive="active"
+        routerLinkActiveOptions="{exact:true}"
+        mat-list-item
+        (click)="sideNav.close()"
+        (click)="onLogout()"
+      >
+        Logout <mat-icon color="primary" class="ml-2"> input </mat-icon>
+      </a>
+    </mat-list-item>
+
+    <mat-divider class="my-3 d-block d-lg-none" *ngIf="authState"></mat-divider>
+    <!-- todo task list-->
+    <mat-list-item *ngIf="authState" class="d-block d-lg-none">
+      <a
+        routerLink="/news"
+        routerLinkActive="active"
+        routerLinkActiveOptions="{exact:true}"
+        mat-list-item
+        (click)="sideNav.close()"
+      >
+        News <mat-icon color="primary" class="ml-2"> receipt_long </mat-icon>
+      </a>
+    </mat-list-item>
+
+    <mat-list-item *ngIf="authState" class="d-block d-lg-none">
+      <a
+        routerLink="/authors"
+        routerLinkActive="active"
+        routerLinkActiveOptions="{exact:true}"
+        mat-list-item
+        (click)="sideNav.close()"
+      >
+        Authors <mat-icon color="primary" class="ml-2"> psychology</mat-icon>
+      </a>
+    </mat-list-item>
+
+    <mat-list-item class="d-block d-lg-none">
+      <a
+        routerLink="/about"
+        routerLinkActive="active"
+        routerLinkActiveOptions="{exact:true}"
+        mat-list-item
+        (click)="sideNav.close()"
+      >
+        About <mat-icon color="primary" class="ml-2"> info</mat-icon>
+      </a>
+    </mat-list-item>
+
+    <mat-divider class="my-3" *ngIf="authState"></mat-divider>
+
+    <mat-list-item class="d-block d-lg-none">
+      <button
+        *ngIf="authState"
+        [matMenuTriggerFor]="menu"
+        mat-icon-button
+        class=""
+      >
+        <span class="lead font-weight-normal ml-1 text-c2">Account</span>
+
+        <mat-icon color="warn" class="ml-2">portrait</mat-icon>
+      </button>
+    </mat-list-item>
+
+    <mat-menu #menu="matMenu">
+      <button
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLink="/account"
+        mat-menu-item
+        (click)="sideNav.close()"
+      >
+        <mat-icon color="primary" class="lead">person_pin</mat-icon>
+        <span>Account</span>
+      </button>
+      <button
+        mat-menu-item
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLink="/settings"
+        (click)="sideNav.close()"
+      >
+        <mat-icon>rule</mat-icon>
+        <span>Settings</span>
+      </button>
+    </mat-menu>
+  </mat-nav-list>
+</section>

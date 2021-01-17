@@ -7,12 +7,10 @@
     ></app-navbar>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-toolbar [sideNav]="side"></app-toolbar>
+    <app-toolbar [sideNav]="side" [authState]="isAuth"></app-toolbar>
     <div class="container">
       <flash-messages></flash-messages>
       <router-outlet></router-outlet>
-      <!-- 
-    <app-test></app-test> -->
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -6,17 +6,17 @@
       class="example-icon"
       aria-label="Example icon-button with menu icon"
     >
-      <mat-icon>menu</mat-icon>
+      <mat-icon class="h2">menu</mat-icon>
     </button>
 
     <span>
-      <mat-icon color="primary" class="h2 mt-3 mx-2">portrait</mat-icon>
-      <span class="lead pb-3 ml-2 d-inline-block">
+      <span class="h2 mb-1 ml-4 d-inline-block font-weight-normal">
         {{ newTitle | titlecase }}
       </span>
     </span>
+
     <!-- links -->
-    <mat-nav-list class="m-auto d-flex">
+    <mat-nav-list class="m-auto d-none d-lg-flex">
       <mat-list-item>
         <a
           mat-list-item
@@ -27,7 +27,7 @@
           >Home</a
         >
       </mat-list-item>
-      <mat-list-item>
+      <mat-list-item *ngIf="authState">
         <a
           class=""
           mat-list-item
@@ -38,7 +38,7 @@
         >
       </mat-list-item>
 
-      <mat-list-item *ngIf="!hideAuthors">
+      <mat-list-item *ngIf="authState" [hidden]="hideAuthors">
         <a
           class=""
           mat-list-item
@@ -71,7 +71,8 @@
         [routerLinkActiveOptions]="{ exact: true }"
         routerLink="/favorites"
         mat-icon-button
-        class="favorite-icon"
+        class="favorite-icon d-none d-sm-inline-block"
+        *ngIf="authState"
       >
         <mat-icon
           [matBadge]="badge <= 0 || !badge ? null : badge"
@@ -81,12 +82,12 @@
         >
       </button>
       <button
+        *ngIf="authState"
         [matMenuTriggerFor]="menu"
         mat-icon-button
-        class="example-icon"
-        aria-label="Example icon-button with share icon"
+        class="mr-5 ml-3 d-none d-sm-inline-block"
       >
-        <mat-icon color="primary" class="h3">contact_page</mat-icon>
+        <mat-icon color="primary" class="h3">portrait</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
         <button
@@ -109,7 +110,7 @@
         </button>
         <button mat-menu-item>
           <mat-icon>input</mat-icon>
-          <span>Logout</span>
+          <span (click)="onLogout()">Logout</span>
         </button>
       </mat-menu>
     </div>
