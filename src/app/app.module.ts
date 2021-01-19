@@ -40,6 +40,7 @@ import { SettingsService } from './services/settings.service';
 import { LocalStorageService } from './services/local-storage.service';
 import { AuthorsEditComponent } from './components/authors-edit/authors-edit.component';
 import { AuthorsAddComponent } from './components/authors-add/authors-add.component';
+import { UsersService } from './services/users.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -84,6 +85,7 @@ import { AuthorsAddComponent } from './components/authors-add/authors-add.compon
     AuthorsService,
     SettingsService,
     LocalStorageService,
+    UsersService,
   ],
   bootstrap: [AppComponent],
 })

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, throwError } from 'rxjs';
 import firebase from 'firebase/app';
 import { tap } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 @Injectable({
   providedIn: 'root',
 })
@@ -38,5 +39,11 @@ export class AuthService {
       );
     });
     return authState;
+  }
+
+  public hundleErrors(error: HttpErrorResponse) {
+    if (error) {
+      return throwError(error.message);
+    }
   }
 }

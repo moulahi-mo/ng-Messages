@@ -1,44 +1,50 @@
 <section class="mt-5 mx-auto">
   <h1 class="display-3 text-center text-danger">Login</h1>
+
+  <!-- ! loader ----------------------------------->
+  <div *ngIf="isLoading" class="h6 my-5 mx-auto d-flex justify-content-center">
+    <mat-progress-spinner
+      color="accent"
+      mode="indeterminate"
+    ></mat-progress-spinner>
+  </div>
+
   <form
     [formGroup]="loginForm"
     (ngSubmit)="onSubmit()"
     class="d-flex flex-column justify-content-between w-75 m-auto"
+    *ngIf="!isLoading"
   >
-    <mat-form-field
-      appearance="standard"
-      hintLabel="email synthaxe is important"
-    >
+    <!-- ! email ------------------------->
+    <mat-form-field appearance="standard" hintLabel="Enter valid email plz">
       <mat-label>Email</mat-label>
-      <input
-        formControlName="email"
-        name="email"
-        matInput
-        placeholder="your email"
-        type="email"
-      />
+      <input formControlName="email" name="email" matInput type="email" />
       <mat-error *ngIf="loginForm.get('email').errors?.required">
         email is requierd</mat-error
       >
       <mat-error *ngIf="loginForm.get('email').errors?.email">
-        email is false</mat-error
+        email is invalid</mat-error
       >
       <mat-hint align="end">
         {{ loginForm.get("email").value?.length }} /100
       </mat-hint>
     </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Enter your password *</mat-label>
+    <!-- ! password-------------------------->
+    <mat-form-field
+      class="my-3"
+      hintLabel="Min 8 characters
+    "
+    >
+      <mat-label>Password *</mat-label>
       <input
         formControlName="password"
         name="password"
-        #pass
         matInput
         [type]="hide ? 'password' : 'text'"
         type="password"
       />
       <button
+        type="button"
         mat-icon-button
         matSuffix
         (click)="hide = !hide"
@@ -47,8 +53,23 @@
       >
         <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
       </button>
+      <mat-error *ngIf="loginForm.get('password').errors?.required">
+        password is requierd
+      </mat-error>
+      <mat-error
+        *ngIf="
+          loginForm.get('password').errors?.pattern &&
+          loginForm.get('password').touched
+        "
+      >
+        password synthaxe error !
+      </mat-error>
+      <mat-hint align="end">
+        {{ loginForm.get("password").value?.length }}
+        /20
+      </mat-hint>
     </mat-form-field>
-
+    <!-- * submit ------------------>
     <button
       [disabled]="!loginForm.valid"
       type="submit"
@@ -60,4 +81,7 @@
       Login
     </button>
   </form>
+  <div *ngIf="isError" class="alert alert-danger text-center my-5" role="alert">
+    <strong> {{ isError }} </strong>
+  </div>
 </section>

@@ -18,13 +18,17 @@ import { AuthorsAddComponent } from './components/authors-add/authors-add.compon
 import { AuthorsEditComponent } from './components/authors-edit/authors-edit.component';
 
 const routes: Routes = [
-  { path: '', component: PostsComponent },
+  { path: '', redirectTo: '/posts', pathMatch: 'full' },
   { path: 'authors', component: AuthorsComponent, canActivate: [AuthGuard] },
+  // {
+  //   path: 'messages',
+  //   component: MessagesComponent,
+  //   canActivate: [AuthGuard],
+  //   children: [{ path: 'inbox', component: InboxComponent }],
+  // },
   {
-    path: 'messages',
-    component: MessagesComponent,
-    canActivate: [AuthGuard],
-    children: [{ path: 'inbox', component: InboxComponent }],
+    path: 'posts',
+    component: PostsComponent,
   },
   {
     path: 'authors/add',

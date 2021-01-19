@@ -1,44 +1,71 @@
-<section class="mt-5 mx-auto">
-  <h1 class="display-3 text-center text-danger">SignUp</h1>
+<section class="my-5 mx-auto">
+  <h1 class="display-4 text-center text-c2">
+    SignUp
+    <mat-icon class="display-4"> contact_page</mat-icon>
+  </h1>
+  <!-- ! loader ----------------------------------->
+  <div *ngIf="isLoading" class="h6 my-5 mx-auto d-flex justify-content-center">
+    <mat-progress-spinner
+      color="primary"
+      mode="indeterminate"
+    ></mat-progress-spinner>
+  </div>
+  <!-- ! isError ----------------------------------->
+  <div *ngIf="isError" class="alert alert-danger text-center my-5" role="alert">
+    <strong> {{ isError }} </strong>
+  </div>
+
   <form
+    *ngIf="!isLoading"
     [formGroup]="signupForm"
     (ngSubmit)="onSubmit()"
-    class="d-flex flex-column justify-content-between w-75 m-auto"
+    class="d-flex flex-column justify-content-between w-75 m-auto mb-5"
   >
-    <mat-form-field
-      appearance="standard"
-      hintLabel="email synthaxe is important"
-    >
-      <mat-label>Email</mat-label>
-      <input
-        formControlName="email"
-        name="email"
-        matInput
-        placeholder="your email"
-        type="email"
-      />
+    <!-- ! Name ------------------------->
+    <mat-form-field appearance="standard">
+      <mat-label>Name *</mat-label>
+      <input formControlName="name" name="name" matInput type="text" />
+      <mat-error *ngIf="signupForm.get('name').errors?.required">
+        name is requierd</mat-error
+      >
+      <mat-error *ngIf="signupForm.get('name').errors?.minlength">
+        name must be 2 chars minimum</mat-error
+      >
+      <mat-hint align="end">
+        {{ signupForm.get("name").value?.length }} /30
+      </mat-hint>
+    </mat-form-field>
+    <!-- ! email ------------------------->
+    <mat-form-field appearance="standard" hintLabel="Enter valid email plz">
+      <mat-label>Email *</mat-label>
+      <input formControlName="email" name="email" matInput type="email" />
       <mat-error *ngIf="signupForm.get('email').errors?.required">
         email is requierd</mat-error
       >
       <mat-error *ngIf="signupForm.get('email').errors?.email">
-        email is false</mat-error
+        email is invalid</mat-error
       >
       <mat-hint align="end">
         {{ signupForm.get("email").value?.length }} /100
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Enter your password *</mat-label>
+    <!-- ! password-------------------------->
+    <mat-form-field
+      class="my-3"
+      hintLabel="Min 8 characters
+    "
+    >
+      <mat-label>Password *</mat-label>
       <input
         formControlName="password"
         name="password"
-        #pass
         matInput
         [type]="hide ? 'password' : 'text'"
         type="password"
       />
       <button
+        type="button"
         mat-icon-button
         matSuffix
         (click)="hide = !hide"
@@ -47,8 +74,181 @@
       >
         <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
       </button>
+      <mat-error *ngIf="signupForm.get('password').errors?.required">
+        password is requierd
+      </mat-error>
+      <mat-error
+        *ngIf="
+          signupForm.get('password').errors?.pattern &&
+          signupForm.get('password').touched
+        "
+      >
+        password synthaxe error ! must be 8 chars minimum
+      </mat-error>
+      <mat-hint align="end">
+        {{ signupForm.get("password").value?.length }}
+        /20
+      </mat-hint>
     </mat-form-field>
 
+    <!-- ! confirm password-------------------------->
+    <mat-form-field
+      class="my-3"
+      hintLabel="Min 8 characters
+    "
+    >
+      <mat-label>Confirm Password *</mat-label>
+      <input
+        formControlName="confirm_password"
+        name="confirm_password"
+        matInput
+        [type]="hidec ? 'password' : 'text'"
+        type="password"
+      />
+      <button
+        type="button"
+        mat-icon-button
+        matSuffix
+        (click)="hidec = !hidec"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hidec"
+      >
+        <mat-icon>{{ hidec ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+      <mat-error *ngIf="signupForm.get('confirm_password').errors?.required">
+        confirmation is requierd
+      </mat-error>
+      <mat-error
+        *ngIf="
+          signupForm.get('confirm_password').errors?.pattern &&
+          signupForm.get('confirm_password').touched
+        "
+      >
+        password synthaxe error ! must be 8 chars minimum
+      </mat-error>
+
+      <mat-error
+        *ngIf="
+          signupForm.get('confirm_password').value !==
+            signupForm.get('password').value &&
+          signupForm.get('confirm_password').touched
+        "
+      >
+        password doesn't match!
+      </mat-error>
+
+      <mat-hint align="end">
+        {{ signupForm.get("confirm_password").value?.length }}
+        /20
+      </mat-hint>
+    </mat-form-field>
+
+    <!-- ! Phone ------------------------->
+    <mat-form-field appearance="standard">
+      <mat-label>Phone *</mat-label>
+      <input
+        maxlength="10"
+        formControlName="phone"
+        name="phone"
+        matInput
+        type="text"
+      />
+      <mat-error *ngIf="signupForm.get('phone').errors?.required">
+        phone is requierd</mat-error
+      >
+      <mat-error *ngIf="signupForm.get('phone').errors?.pattern">
+        phone number is invalid</mat-error
+      >
+      <mat-hint align="end">
+        {{ signupForm.get("phone").value?.length }} /12
+      </mat-hint>
+    </mat-form-field>
+
+    <!--TODO ADDitional PERSONAl  ------------------>
+    <mat-accordion class="my-5" multi formGroupName="personal">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header class="d-flex justify-content-between">
+          <mat-panel-title> Personal Infos </mat-panel-title>
+          <mat-panel-description class="ml-3">
+            Age | City | Disponibility
+          </mat-panel-description>
+          <mat-icon>date_range</mat-icon>
+        </mat-expansion-panel-header>
+
+        <div class="d-flex flex-column flex-lg-row justify-content-between">
+          <mat-form-field>
+            <mat-label>Age</mat-label>
+            <input
+              name="age"
+              formControlName="age"
+              matInput
+              type="number"
+              min="10"
+            />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>city</mat-label>
+            <input
+              name="city"
+              formControlName="city"
+              matInput
+              type="text"
+              minlenght="3"
+            />
+          </mat-form-field>
+
+          <mat-form-field color="warn">
+            <mat-label>Disponibile from :</mat-label>
+            <input
+              name="disponibility"
+              formControlName="disponibility"
+              matInput
+              [matDatepicker]="picker"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <!--TODO FORM ARRAY HOBBIES  ------------------>
+    <mat-accordion class="mb-5 mt-3" multi formArrayName="hobbies">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header class="d-flex justify-content-between">
+          <mat-panel-title> Hobbies </mat-panel-title>
+          <mat-panel-description class="ml-3">
+            Add your hobbies
+          </mat-panel-description>
+          <mat-icon>connect_without_contact</mat-icon>
+        </mat-expansion-panel-header>
+        <button
+          type="button"
+          mat-raised-button
+          class="mb-2"
+          (click)="onHobby()"
+          color="accent"
+        >
+          Add hobby
+        </button>
+
+        <input
+          *ngFor="let hobby of hb?.controls; index as i"
+          name="hobby"
+          [formControlName]="i"
+          matInput
+          type="text"
+          id="hoobyAdd"
+          class="my-3"
+          placeholder="Add Hobby.."
+        />
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <!-- * submit ------------------>
     <button
       [disabled]="!signupForm.valid"
       type="submit"
@@ -60,4 +260,5 @@
       signUp
     </button>
   </form>
+
 </section>
