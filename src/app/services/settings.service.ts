@@ -15,12 +15,7 @@ export class SettingsService {
 
   public addSettings(set: Settings) {
     this.settingsEmit.next(set);
-    return from(this.afire.doc<Settings>(`settings/${this.docId}`).set(set));
-    // .pipe(
-    //    tap(data=>{
-    //      this.settingsEmit.next(data);
-    //    })
-    // );
+    return this.afire.doc<Settings>(`settings/${this.docId}`).set(set);
   }
   public getSettings(): Observable<Settings> {
     return from(

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { MatSelectionList } from '@angular/material/list';
 import { MatSelect } from '@angular/material/select';
@@ -9,16 +9,22 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+import { fromEvent, Observable, Subscription } from 'rxjs';
+let widthListner = fromEvent(window, 'resize');
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit, OnDestroy {
   @ViewChild('selectP') selectP: MatSelectionList;
   @ViewChild('settingForm') setForm: NgForm;
   listChoice: Settings;
   toppings = new FormControl();
+  changeFlex: number = 2;
+  unsb: Subscription;
+  // widthListner:Observable<number>;
+
   toppingList: string[] = [
     'Adding authors',
     'Editing authors',
@@ -26,16 +32,24 @@ export class SettingsComponent implements OnInit {
     'Hide authors section',
   ];
   posts: string[] = [
-    'Adding authors',
-    'Editing authors',
-    'Deleting authors',
-    'Hide authors section',
+    'Adding posts',
+    'Editing posts',
+    'Deleting posts',
+    'Hide posts section',
   ];
   horizontalPosition: MatSnackBarHorizontalPosition = 'left';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   constructor(private set: SettingsService, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
+    widthListner.subscribe((data) => {
+      if (data.target.innerWidth < 600) {
+        this.changeFlex = 1;
+      } else {
+        this.changeFlex = 2;
+      }
+    });
+
     this.listChoice = {
       registration: null,
       authors: [],
@@ -73,5 +87,9 @@ export class SettingsComponent implements OnInit {
       this.setForm.setValue(data);
       console.log(data);
     });
+  }
+
+  ngOnDestroy() {
+    this.unsb.unsubscribe();
   }
 }
