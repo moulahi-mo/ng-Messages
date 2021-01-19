@@ -13,6 +13,11 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 import { SettingsService } from 'src/app/services/settings.service';
 import { FavoritesService } from 'src/app/services/favorites.service';
 import { Subscription } from 'rxjs';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -26,13 +31,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
   @Input() sideNav: MatSidenav;
   @Input() authState: boolean;
   hideSignup: boolean;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'left';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   // @Output()
   constructor(
     private auth: AuthService,
     private route: Router,
     private _flashMessagesService: FlashMessagesService,
     private sett: SettingsService,
-    private fav: FavoritesService
+    private fav: FavoritesService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -54,11 +62,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   public onLogout() {
     this.auth.logout().finally(() => {
-      this._flashMessagesService.show('We are Logged out redirecting ..!', {
-        cssClass: 'alert-dark text-center ',
-        timeout: 3000,
+      //! show the snackbar
+      this.snackBar.open(`Logging Out..`, 'undo', {
+        duration: 3000,
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
       });
-
       this.route.navigate(['/login']);
       console.log('loggout');
       this.onSignOut.emit(false);

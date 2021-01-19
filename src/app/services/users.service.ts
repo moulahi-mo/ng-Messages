@@ -12,4 +12,8 @@ export class UsersService {
   public addUser(user: User): Observable<any> {
     return from(this.afstore.doc(`users/${user.id}`).set(user));
   }
+
+  public getUser(id: string): Observable<any> {
+    return this.afstore.doc(`users/${id}`).valueChanges();
+  }
 }

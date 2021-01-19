@@ -1,1 +1,82 @@
-<p>account works!</p>
+<section class="my-5">
+  <h1 class="display-4 text-center text-c2">
+    Profile
+    <mat-icon class="display-4"> leaderboard </mat-icon>
+  </h1>
+  <div class="row">
+    <div class="col">
+      <mat-card class="mt-3">
+        <mat-card-header class="my-3 d-block mx-auto">
+          <mat-card-title class="text-c1 text-center w-100">{{
+            activeUser.name
+          }}</mat-card-title>
+          <mat-card-subtitle class="text-muted text-center w-100">
+            {{ activeUser.id }}
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="d-flex justify-content-around">
+          <mat-list>
+            <mat-list-item class="my-2">
+              <mat-icon mat-list-icon>perm_identity</mat-icon>
+              <div mat-line class="text-muted">Email</div>
+              <div mat-line>{{ activeUser.email | titlecase }}</div>
+            </mat-list-item>
+
+            <mat-list-item class="my-2">
+              <mat-icon mat-list-icon (click)="hide = !hide">{{
+                hide ? "visibility_off" : "visibility"
+              }}</mat-icon>
+              <div mat-line class="text-muted">Password</div>
+
+              <div mat-line [ngClass]="{ 'text-c2 ': !hide }">
+                {{ hide ? "Password Protected" : activeUser.password }}
+              </div>
+            </mat-list-item>
+            <mat-list-item class="my-2">
+              <mat-icon mat-list-icon>perm_identity</mat-icon>
+              <div mat-line class="text-muted">Phone</div>
+              <div mat-line>{{ activeUser.phone }}</div>
+            </mat-list-item>
+
+            <mat-list-item class="my-2">
+              <mat-icon mat-list-icon>perm_identity</mat-icon>
+              <div mat-line class="text-muted">City</div>
+              <div mat-line>{{ activeUser.personal.city }}</div>
+            </mat-list-item>
+            <mat-list-item class="my-2">
+              <mat-icon mat-list-icon>perm_identity</mat-icon>
+              <div mat-line class="text-muted">Age</div>
+              <div mat-line>{{ activeUser.personal.age }} years old</div>
+            </mat-list-item>
+            <mat-list-item class="my-2">
+              <mat-icon mat-list-icon>perm_identity</mat-icon>
+              <div mat-line class="text-muted">Disponible from :</div>
+              <div mat-line>
+                {{ activeUser.personal.disponibility | date: "short" }}
+              </div>
+            </mat-list-item>
+          </mat-list>
+          <section *ngIf="activeUser.hobbies.length > 0" class="my-2">
+            <mat-divider class="d-block my-2"></mat-divider>
+            <label class="mt-5 text-muted"> Hobbies</label>
+            <mat-selection-list [multiple]="false">
+              <mat-list-option
+                *ngFor="let hobby of activeUser.hobbies; index as i"
+                [value]="hobby"
+                [class]="i % 2 == 0 ? 'bg-light' : ''"
+              >
+                {{ hobby }}
+              </mat-list-option>
+            </mat-selection-list>
+          </section>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</section>
+<ng-template #noactiveUser>
+  <div class="alert alert-danger my-5 text-center" role="alert">
+    <strong class="lead">No infos activeUser found !!</strong>
+  </div>
+</ng-template>
