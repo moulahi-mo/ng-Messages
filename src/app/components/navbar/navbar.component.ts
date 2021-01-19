@@ -18,12 +18,15 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+import { UsersService } from 'src/app/services/users.service';
+import { User } from 'src/app/Models/interfaces';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+  user: { id: string; name: string; email: string };
   isLogout: boolean = false;
   badge: number = 0;
   unsb: Subscription;
@@ -37,13 +40,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(
     private auth: AuthService,
     private route: Router,
-    private _flashMessagesService: FlashMessagesService,
+    private usersService: UsersService,
     private sett: SettingsService,
     private fav: FavoritesService,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
+    this.user = {
+      id: null,
+      name: null,
+      email: null,
+    };
+    // ! get registration state from settings
     console.log(this.authState);
     this.sett.getSettings().subscribe((data) => {
       this.hideSignup = data.registration === 'restrict' ? true : false;
@@ -57,6 +66,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.unsb = this.fav.emitFavorite.subscribe((num) => {
       console.log('heart', num);
       this.badge += num;
+    });
+
+    //! get user info (name/email/photo)
+    this.auth.authState().subscribe((user) => {
+      if (user) {
+        this.usersService.getUser(user.uid).subscribe((data) => {
+          this.user = {
+            id: data.id,
+            name: data.name,
+            email: data.email,
+          };
+        });
+      }
     });
   }
 

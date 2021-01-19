@@ -23,6 +23,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   hideAuthors: boolean;
   badge: number = 0;
   unsb: Subscription;
+  unsb2: Subscription;
   newTitle: string;
   @Input() authState: boolean;
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
@@ -38,6 +39,18 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    // ! get subject for settings title
+
+    this.sett.settingsEmit.subscribe((data) => {
+      console.log(data, 'new title emit ');
+      this.hideAuthors = data.authors.includes('Hide authors section')
+        ? true
+        : false;
+      this.newTitle =
+        data.title == null || this.newTitle == '' ? 'blogger news' : data.title;
+      console.log('newtitle i am the title', this.newTitle);
+    });
+
     // ! get subject for favorite number
     this.fav.numberOfFavorites.subscribe((n) => {
       this.badge = n;
@@ -46,15 +59,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.unsb = this.fav.emitFavorite.subscribe((num) => {
       console.log('heart', num);
       this.badge += num;
-    });
-    // ! get hide authors from settings
-    this.sett.getSettings().subscribe((data) => {
-      this.hideAuthors = data.authors.includes('Hide authors section')
-        ? true
-        : false;
-      this.newTitle =
-        data.title == null || this.newTitle == '' ? 'blogger news' : data.title;
-      console.log('newtitle', this.newTitle);
     });
   }
 
@@ -73,5 +77,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.unsb.unsubscribe();
+    this.unsb2.unsubscribe();
   }
 }

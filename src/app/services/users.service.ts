@@ -16,4 +16,8 @@ export class UsersService {
   public getUser(id: string): Observable<any> {
     return this.afstore.doc(`users/${id}`).valueChanges();
   }
+
+  public removeUser(id: string) {
+    return this.afstore.doc(`users/${id}`).delete();
+  }
 }

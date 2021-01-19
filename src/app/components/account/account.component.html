@@ -42,7 +42,7 @@
             <mat-list-item class="my-2">
               <mat-icon mat-list-icon>perm_identity</mat-icon>
               <div mat-line class="text-muted">City</div>
-              <div mat-line>{{ activeUser.personal.city }}</div>
+              <div mat-line>{{ activeUser.personal.city | titlecase }}</div>
             </mat-list-item>
             <mat-list-item class="my-2">
               <mat-icon mat-list-icon>perm_identity</mat-icon>
@@ -75,6 +75,22 @@
     </div>
   </div>
 </section>
+<article>
+  <div class="row d-flex flex-column justify-content-around my-5">
+    <p class="text-danger alert alert-danger text-center">
+      Delete Permanently my Account
+
+      <button
+        (click)="removeAccount(activeUser.id)"
+        mat-flat-button
+        color="accent"
+        class="d-block my-3 mx-auto"
+      >
+        Delete It
+      </button>
+    </p>
+  </div>
+</article>
 <ng-template #noactiveUser>
   <div class="alert alert-danger my-5 text-center" role="alert">
     <strong class="lead">No infos activeUser found !!</strong>

@@ -36,6 +36,7 @@ export class FavoritesService {
       .pipe(
         tap((res) => {
           console.log(res);
+          //! subject
           this.numberOfFavorites.next(res.length);
         })
       );

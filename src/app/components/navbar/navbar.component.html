@@ -1,6 +1,10 @@
 <section class="mt-5">
   <div class="d-flex justify-content-around">
-    <h3 class="lead font-weith-normal text-c2 my-2">Welcome Josh</h3>
+    <div class="d-flex flex-column justify-content-between">
+      <h5 class="font-weight-normal text-c2">{{ user.name }}</h5>
+      <p class="text-muted">{{ user.email }}</p>
+    </div>
+
     <button
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }"
@@ -15,6 +19,7 @@
         [matBadge]="badge <= 0 || !badge ? null : badge"
         matBadgeColor="primary"
         class="h3"
+        matBadgePosition="before"
         >favorite</mat-icon
       >
     </button>
