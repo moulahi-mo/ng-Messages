@@ -10,7 +10,7 @@
   </section>
   <!-- ! posts -->
   <article class="col-12 my-5" *ngFor="let post of posts; index as i">
-    <mat-card [id]="i" class="">
+    <mat-card #card [id]="i" class="">
       <mat-card-header
         [ngClass]="
           isAuth
@@ -43,24 +43,27 @@
         src="https://material.angular.io/assets/img/examples/shiba2.jpg"
         alt="Photo of a Shiba Inu"
       />
-      <mat-card-content>
-        {{ post.body }}
-        <!-- <p>
-          The Shiba Inu is the smallest of the six original and distinct spitz
-          breeds of dog from Japan. A small, agile dog that copes very well with
-          mountainous terrain, the Shiba Inu was originally bred for hunting.
-        </p> -->
-        <br />
-        <small class="mt-3 text-muted">
-          {{ post.date.toDate() | date: "short" }}
-        </small>
+      <mat-card-content class="text-break">
+        <p>
+          {{ bodyInner[i] | titlecase }}
+        </p>
       </mat-card-content>
+      <br />
+      <small class="mt-3 text-muted">
+        {{ post.date.toDate() | date: "short" }}
+      </small>
       <mat-card-actions *ngIf="isAuth">
-        <button mat-button>
-          <mat-icon color="primary"> thumb_up_alt </mat-icon>
+        <button (click)="onThumbUp(i)" mat-button>
+          <mat-icon [color]="isThumbUp && i == indexUp ? 'warn' : 'primary'">
+            thumb_up_alt
+          </mat-icon>
         </button>
-        <button mat-button>
-          <mat-icon color="primary"> thumb_down_alt</mat-icon>
+        <button (click)="onThumbDown(i)" mat-button>
+          <mat-icon
+            [color]="isThumbDown && i == indexDown ? 'accent' : 'primary'"
+          >
+            thumb_down_alt</mat-icon
+          >
         </button>
       </mat-card-actions>
     </mat-card>

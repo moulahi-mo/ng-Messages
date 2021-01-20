@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { Post } from 'src/app/Models/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { PostsService } from 'src/app/services/posts.service';
@@ -7,19 +14,26 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.scss'],
 })
 export class PostsComponent implements OnInit {
+  @ViewChild('secret') secret: ElementRef;
   horizontalPosition: MatSnackBarHorizontalPosition = 'left';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   isError: string = null;
   isLoading: boolean = false;
   isAuth: boolean;
   post: Post;
+  indexDown: number = null;
+  indexUp: number = null;
   posts: Post[] = [];
+  isThumbUp: boolean = true;
+  isThumbDown: boolean = false;
+  bodyInner: string[];
   constructor(
     private auth: AuthService,
     private Pservice: PostsService,
@@ -31,8 +45,8 @@ export class PostsComponent implements OnInit {
       (user) => {
         if (user) {
           this.isAuth = true;
-          //* init posts
           this.fetchPosts();
+          //* init posts
         } else {
           this.isAuth = false;
         }
@@ -40,12 +54,21 @@ export class PostsComponent implements OnInit {
       (err) => (this.isError = err.message)
     );
   }
+
   //! get posts
   public fetchPosts() {
     this.Pservice.getPosts().subscribe(
       (data) => {
         console.log(data);
         this.posts = data;
+        this.bodyInner = this.posts.map((item) => {
+          const bd = document.createElement('p');
+          bd.innerHTML += item.body;
+
+          return bd.textContent;
+        });
+
+        console.log(this.bodyInner);
       },
       (err) => (this.isError = err.message)
     );
@@ -82,8 +105,14 @@ export class PostsComponent implements OnInit {
         .catch((err) => (this.isError = err.message));
     }
   }
-  // //! on edit
-  // public onEdit(post:Post) {
 
-  // }
+  //! on thumb
+  public onThumbDown(i: number) {
+    this.isThumbDown = !this.isThumbDown;
+    this.indexDown = i;
+  }
+  public onThumbUp(i: number) {
+    this.isThumbUp = !this.isThumbUp;
+    this.indexUp = i;
+  }
 }
