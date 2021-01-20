@@ -13,12 +13,16 @@
     <!-- ! loader ----------------------------------->
     <div
       *ngIf="isLoading"
-      class="h6 my-5 mx-auto d-flex justify-content-center"
+      class="h6 my-5 mx-auto d-flex flex-column justify-content-around"
     >
       <mat-progress-spinner
         color="primary"
         mode="indeterminate"
       ></mat-progress-spinner>
+
+      <p class="lead text-center text-primary font-weight-normal mt-3">
+        Adding Post ...
+      </p>
     </div>
     <!--! form -->
     <div class="col-12" *ngIf="!isLoading">

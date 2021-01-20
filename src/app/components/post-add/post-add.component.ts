@@ -5,6 +5,7 @@ import { Authors, Post } from 'src/app/Models/interfaces';
 import { AuthorsService } from 'src/app/services/authors.service';
 import { NgForm } from '@angular/forms';
 import { PostsService } from 'src/app/services/posts.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-add',
@@ -27,7 +28,8 @@ export class PostAddComponent implements OnInit {
   };
   constructor(
     private authors: AuthorsService,
-    private Pservice: PostsService
+    private Pservice: PostsService,
+    private route: Router
   ) {}
 
   ngOnInit(): void {
@@ -52,12 +54,14 @@ export class PostAddComponent implements OnInit {
   }
 
   public onSubmit(form: NgForm) {
-    console.log(form.value);
-    this.Pservice.addPost(form.value).subscribe(
+    const p = { ...form.value, date: new Date() };
+    console.log(p);
+    this.Pservice.addPost(p).subscribe(
       () => {
         this.isLoading = true;
         setTimeout(() => {
           this.isLoading = false;
+          this.route.navigate(['/posts']);
         }, 2000);
 
         form.reset();

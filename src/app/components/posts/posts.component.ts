@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from 'src/app/Models/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
+import { PostsService } from 'src/app/services/posts.service';
 
 @Component({
   selector: 'app-posts',
@@ -13,15 +14,23 @@ export class PostsComponent implements OnInit {
   isAuth: boolean;
   post: Post;
   posts: Post[];
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private Pservice: PostsService) {}
 
   ngOnInit(): void {
     this.auth.authState().subscribe((user) => {
       if (user) {
         this.isAuth = true;
+        this.fetchPosts();
       } else {
         this.isAuth = false;
       }
+    });
+  }
+
+  public fetchPosts() {
+    this.Pservice.getPosts().subscribe((data) => {
+      console.log(data);
+      this.posts = data;
     });
   }
 

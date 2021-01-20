@@ -9,7 +9,7 @@
     <app-post-aside [isAuth]="isAuth"></app-post-aside>
   </section>
   <!-- ! posts -->
-  <article class="col-12 my-5">
+  <article class="col-12 my-5" *ngFor="let post of posts">
     <mat-card class="">
       <mat-card-header
         [ngClass]="
@@ -19,8 +19,10 @@
         "
       >
         <div class="text-center justify-self-start">
-          <mat-card-title class="">Title</mat-card-title>
-          <mat-card-subtitle>Author</mat-card-subtitle>
+          <mat-card-title class="">
+            {{ post.title | titlecase }}
+          </mat-card-title>
+          <mat-card-subtitle> {{ post.author | titlecase }} </mat-card-subtitle>
         </div>
 
         <div class="d-flex justify-content-around" *ngIf="isAuth">
@@ -34,11 +36,16 @@
         alt="Photo of a Shiba Inu"
       />
       <mat-card-content>
-        <p>
+        {{ post.body }}
+        <!-- <p>
           The Shiba Inu is the smallest of the six original and distinct spitz
           breeds of dog from Japan. A small, agile dog that copes very well with
           mountainous terrain, the Shiba Inu was originally bred for hunting.
-        </p>
+        </p> -->
+        <br />
+        <small class="mt-3 text-muted">
+          {{ post.date.toDate() | date: "short" }}
+        </small>
       </mat-card-content>
       <mat-card-actions *ngIf="isAuth">
         <button mat-button>

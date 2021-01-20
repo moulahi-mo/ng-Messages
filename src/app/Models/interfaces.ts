@@ -79,4 +79,5 @@ export interface Post {
   author: string;
   body: string;
   thumbs?: number;
+  date?: Date;
 }
