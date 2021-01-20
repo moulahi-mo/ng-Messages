@@ -41,6 +41,13 @@ import { LocalStorageService } from './services/local-storage.service';
 import { AuthorsEditComponent } from './components/authors-edit/authors-edit.component';
 import { AuthorsAddComponent } from './components/authors-add/authors-add.component';
 import { UsersService } from './services/users.service';
+import { AuthorsDetailsComponent } from './components/authors-details/authors-details.component';
+import { PostAddComponent } from './components/post-add/post-add.component';
+import { PostEditComponent } from './components/post-edit/post-edit.component';
+import { PostAsideComponent } from './components/post-aside/post-aside.component';
+import { FilterSearchComponent } from './components/filter-search/filter-search.component';
+import { PostsService } from './services/posts.service';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +69,11 @@ import { UsersService } from './services/users.service';
     PostsComponent,
     AuthorsEditComponent,
     AuthorsAddComponent,
+    AuthorsDetailsComponent,
+    PostAddComponent,
+    PostEditComponent,
+    PostAsideComponent,
+    FilterSearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +87,7 @@ import { UsersService } from './services/users.service';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    CKEditorModule,
   ],
   providers: [
     MessagesService,
@@ -86,6 +99,7 @@ import { UsersService } from './services/users.service';
     SettingsService,
     LocalStorageService,
     UsersService,
+    PostsService,
   ],
   bootstrap: [AppComponent],
 })

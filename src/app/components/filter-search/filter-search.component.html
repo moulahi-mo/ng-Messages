@@ -1,0 +1,11 @@
+<form [formGroup]="searchForm" (keyup)="onSubmit()">
+  <mat-form-field apparence="fill" color="primary">
+    <input
+      name="term"
+      type="text"
+      placeholder="Filter articles.."
+      matInput
+      formControlName="term"
+    />
+  </mat-form-field>
+</form>

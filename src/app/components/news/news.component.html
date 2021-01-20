@@ -7,7 +7,7 @@
   <nav mat-tab-nav-bar class="d-flex justify-content-around" *ngIf="!isLoading">
     <app-search-box
       class="w-100"
-      (onSearch)="searchArticle($event)"
+      (onSearchAgain)="searchArticle($event)"
       (onFetch)="searchForNewArticle($event)"
     ></app-search-box>
   </nav>

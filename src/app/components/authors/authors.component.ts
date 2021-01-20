@@ -28,9 +28,9 @@ export class AuthorsComponent implements OnInit, OnDestroy {
     'username',
     'name',
     'email',
-    'joind',
     'status',
     'city',
+    'joind',
     'details',
   ];
   listAuthors: Authors[] = [];

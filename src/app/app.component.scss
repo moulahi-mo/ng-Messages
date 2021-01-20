@@ -20,3 +20,6 @@ mat-icon {
   border: 0 !important;
   outline: 0 !important;
 }
+router-outlet {
+  min-height: 100vh !important;
+}

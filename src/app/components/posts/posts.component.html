@@ -1,1 +1,53 @@
-<p>posts works!</p>
+<div class="row my-5">
+  <h2 class="text-center text-c1 display-4">Latest Posts</h2>
+</div>
+
+<section class="row">
+  <!-- ! aside -->
+  <section class="col-12 d-flex justify-content-between">
+    <app-filter-search (onSearch)="filtring($event)"></app-filter-search>
+    <app-post-aside [isAuth]="isAuth"></app-post-aside>
+  </section>
+  <!-- ! posts -->
+  <article class="col-12 my-5">
+    <mat-card class="">
+      <mat-card-header
+        [ngClass]="
+          isAuth
+            ? 'd-flex justify-content-between'
+            : 'd-flex justify-content-center'
+        "
+      >
+        <div class="text-center justify-self-start">
+          <mat-card-title class="">Title</mat-card-title>
+          <mat-card-subtitle>Author</mat-card-subtitle>
+        </div>
+
+        <div class="d-flex justify-content-around" *ngIf="isAuth">
+          <mat-icon color="primary" class="mr-2 h3"> create </mat-icon>
+          <mat-icon color="accent" class="h3"> remove_circle</mat-icon>
+        </div>
+      </mat-card-header>
+      <img
+        mat-card-image
+        src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+        alt="Photo of a Shiba Inu"
+      />
+      <mat-card-content>
+        <p>
+          The Shiba Inu is the smallest of the six original and distinct spitz
+          breeds of dog from Japan. A small, agile dog that copes very well with
+          mountainous terrain, the Shiba Inu was originally bred for hunting.
+        </p>
+      </mat-card-content>
+      <mat-card-actions *ngIf="isAuth">
+        <button mat-button>
+          <mat-icon color="primary"> thumb_up_alt </mat-icon>
+        </button>
+        <button mat-button>
+          <mat-icon color="primary"> thumb_down_alt</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </article>
+</section>

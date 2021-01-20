@@ -16,7 +16,9 @@ import { PostsComponent } from './components/posts/posts.component';
 import { AuthorsComponent } from './components/authors/authors.component';
 import { AuthorsAddComponent } from './components/authors-add/authors-add.component';
 import { AuthorsEditComponent } from './components/authors-edit/authors-edit.component';
-
+import { AuthorsDetailsComponent } from './components/authors-details/authors-details.component';
+import { PostAsideComponent } from './components/post-aside/post-aside.component';
+import { PostAddComponent } from './components/post-add/post-add.component';
 const routes: Routes = [
   { path: '', redirectTo: '/posts', pathMatch: 'full' },
   { path: 'authors', component: AuthorsComponent, canActivate: [AuthGuard] },
@@ -29,6 +31,17 @@ const routes: Routes = [
   {
     path: 'posts',
     component: PostsComponent,
+    // children: [
+    //   {
+    //     path: '/:id',
+    //     component: PostAsideComponent,
+    //   },
+    // ],
+  },
+  {
+    path: 'posts/add',
+    component: PostAddComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'authors/add',
@@ -38,6 +51,11 @@ const routes: Routes = [
   {
     path: 'authors/edit/:id',
     component: AuthorsEditComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'authors/:id',
+    component: AuthorsDetailsComponent,
     canActivate: [AuthGuard],
   },
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },

@@ -16,6 +16,7 @@ export class SearchBoxComponent implements OnInit {
   @Input() index: number;
   @Output() onSearch: EventEmitter<string> = new EventEmitter();
   @Output() onFetch: EventEmitter<News[]> = new EventEmitter();
+  @Output() onSearchAgain: EventEmitter<string> = new EventEmitter();
   searchForm: FormGroup;
   fetchForm: FormGroup;
   news: News[] = [];
@@ -29,9 +30,9 @@ export class SearchBoxComponent implements OnInit {
     this.fetchForm = this.fb.group({
       query: [null, Validators.required],
     });
-    this.searchForm = new FormGroup({
-      term: new FormControl(null),
-    });
+    // this.searchForm = new FormGroup({
+    //   term: new FormControl(null),
+    // });
 
     this.initArticles();
   }
@@ -48,13 +49,16 @@ export class SearchBoxComponent implements OnInit {
       console.log(this.tags);
     });
   }
-
-  //! search inside articles
-  public onSubmit() {
-    let val = this.searchForm.value.term.toLowerCase().trim();
-    this.onSearch.emit(val);
-    console.log(val, this.news);
+  public searchArticle(val: string) {
+    this.onSearchAgain.emit(val);
   }
+
+  // //! search inside articles
+  // public onSubmit() {
+  //   let val = this.searchForm.value.term.toLowerCase().trim();
+  //   this.onSearch.emit(val);
+  //   console.log(val, this.news);
+  // }
   //! search for new keyword
   public onFetching() {
     let q = this.fetchForm.value.query.toLowerCase().trim();

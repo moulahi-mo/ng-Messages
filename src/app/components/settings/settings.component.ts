@@ -42,7 +42,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   constructor(private set: SettingsService, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
-    widthListner.subscribe((data) => {
+    this.unsb = widthListner.subscribe((data) => {
       if (data.target.innerWidth < 600) {
         this.changeFlex = 1;
       } else {

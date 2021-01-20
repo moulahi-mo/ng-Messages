@@ -72,3 +72,11 @@ export interface User {
 
   hobbies: string[];
 }
+
+export interface Post {
+  id?: string;
+  title: string;
+  author: string;
+  body: string;
+  thumbs?: number;
+}
