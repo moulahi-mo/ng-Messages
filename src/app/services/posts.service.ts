@@ -36,4 +36,11 @@ export class PostsService {
         })
       );
   }
+
+  public deletePost(id: string) {
+    return this.afstore.doc(`posts/${id}`).delete();
+  }
+  public updatePost(post: Post) {
+    return from(this.afstore.doc(`posts/${post.id}`).update(post));
+  }
 }

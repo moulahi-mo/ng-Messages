@@ -9,8 +9,8 @@
     <app-post-aside [isAuth]="isAuth"></app-post-aside>
   </section>
   <!-- ! posts -->
-  <article class="col-12 my-5" *ngFor="let post of posts">
-    <mat-card class="">
+  <article class="col-12 my-5" *ngFor="let post of posts; index as i">
+    <mat-card [id]="i" class="">
       <mat-card-header
         [ngClass]="
           isAuth
@@ -26,8 +26,16 @@
         </div>
 
         <div class="d-flex justify-content-around" *ngIf="isAuth">
-          <mat-icon color="primary" class="mr-2 h3"> create </mat-icon>
-          <mat-icon color="accent" class="h3"> remove_circle</mat-icon>
+          <mat-icon
+            [routerLink]="['/posts', 'edit', post.id]"
+            color="primary"
+            class="mr-2 h3"
+          >
+            create
+          </mat-icon>
+          <mat-icon (click)="onDelete(post.id)" color="accent" class="h3">
+            remove_circle</mat-icon
+          >
         </div>
       </mat-card-header>
       <img
@@ -58,3 +66,8 @@
     </mat-card>
   </article>
 </section>
+
+<!-- ? if error -->
+<div *ngIf="isError" class="mt-5 alert alert-danger text-center my-5">
+  <h4>{{ isError }}</h4>
+</div>

@@ -2,52 +2,88 @@ import { Component, OnInit } from '@angular/core';
 import { Post } from 'src/app/Models/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { PostsService } from 'src/app/services/posts.service';
-
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.scss'],
 })
 export class PostsComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = 'left';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   isError: string = null;
   isLoading: boolean = false;
   isAuth: boolean;
   post: Post;
-  posts: Post[];
-  constructor(private auth: AuthService, private Pservice: PostsService) {}
+  posts: Post[] = [];
+  constructor(
+    private auth: AuthService,
+    private Pservice: PostsService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
-    this.auth.authState().subscribe((user) => {
-      if (user) {
-        this.isAuth = true;
-        this.fetchPosts();
+    this.auth.authState().subscribe(
+      (user) => {
+        if (user) {
+          this.isAuth = true;
+          //* init posts
+          this.fetchPosts();
+        } else {
+          this.isAuth = false;
+        }
+      },
+      (err) => (this.isError = err.message)
+    );
+  }
+  //! get posts
+  public fetchPosts() {
+    this.Pservice.getPosts().subscribe(
+      (data) => {
+        console.log(data);
+        this.posts = data;
+      },
+      (err) => (this.isError = err.message)
+    );
+  }
+  //! filtr search
+  public filtring(val: string) {
+    this.posts.forEach((art, index) => {
+      if (
+        art.title.toLowerCase().trimEnd().includes(val) ||
+        art.author.toLowerCase().trimEnd().includes(val) ||
+        art.body.toLowerCase().trimEnd().includes(val)
+      ) {
+        document.getElementById(index.toString()).classList.remove('d-none');
+        console.log('is here');
       } else {
-        this.isAuth = false;
+        document.getElementById(`${index}`).classList.add('d-none');
+        console.log('is Not here');
       }
     });
   }
 
-  public fetchPosts() {
-    this.Pservice.getPosts().subscribe((data) => {
-      console.log(data);
-      this.posts = data;
-    });
+  //!  on delete
+  public onDelete(id: string) {
+    if (confirm('Are you sure ?')) {
+      this.Pservice.deletePost(id)
+        .then(() => {
+          //* snackbar
+          this.snackBar.open('post deleted ..', 'undo', {
+            duration: 4000,
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+        })
+        .catch((err) => (this.isError = err.message));
+    }
   }
+  // //! on edit
+  // public onEdit(post:Post) {
 
-  public filtring(val: string) {
-    // this.posts.forEach((art, index) => {
-    //   if (
-    //     art.content.toLowerCase().trimEnd().includes(val) ||
-    //     art.author.toLowerCase().trimEnd().includes(val) ||
-    //     art.title.toLowerCase().trimEnd().includes(val) ||
-    //     art.publishedAt.toString().toLowerCase().trimEnd().includes(val)
-    //   ) {
-    //     document.getElementById(index.toString()).classList.remove('d-none');
-    //     console.log('is here');
-    //   } else {
-    //     document.getElementById(`${index}`).classList.add('d-none');
-    //     console.log('is Not here');
-    //   }
-    // });
-  }
+  // }
 }

@@ -19,6 +19,7 @@ import { AuthorsEditComponent } from './components/authors-edit/authors-edit.com
 import { AuthorsDetailsComponent } from './components/authors-details/authors-details.component';
 import { PostAsideComponent } from './components/post-aside/post-aside.component';
 import { PostAddComponent } from './components/post-add/post-add.component';
+import { PostEditComponent } from './components/post-edit/post-edit.component';
 const routes: Routes = [
   { path: '', redirectTo: '/posts', pathMatch: 'full' },
   { path: 'authors', component: AuthorsComponent, canActivate: [AuthGuard] },
@@ -37,6 +38,11 @@ const routes: Routes = [
     //     component: PostAsideComponent,
     //   },
     // ],
+  },
+  {
+    path: 'posts/edit/:id',
+    component: PostEditComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'posts/add',
