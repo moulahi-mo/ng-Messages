@@ -6,6 +6,9 @@ import { AuthorsService } from 'src/app/services/authors.service';
 import { NgForm } from '@angular/forms';
 import { PostsService } from 'src/app/services/posts.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { uniqueid } from 'src/app/shared/functions';
+import { finalize } from 'rxjs/operators';
 let id: string = null;
 @Component({
   selector: 'app-post-edit',
@@ -21,6 +24,12 @@ export class PostEditComponent implements OnInit {
   isError: string = null;
   isLoading: boolean = false;
   listAuthors: Authors[];
+  uploadProgress: number = null;
+  indexImage: string = uniqueid();
+  filePath: string = null;
+  downloadURL: any;
+  link: string = null;
+  isUploading: boolean = false;
   public Editor = ClassicEditor;
   public config = {
     placeholder: 'Create new post...',
@@ -31,7 +40,7 @@ export class PostEditComponent implements OnInit {
   constructor(
     private authors: AuthorsService,
     private Pservice: PostsService,
-
+    private storage: AngularFireStorage,
     private activated: ActivatedRoute,
     private route: Router
   ) {}
@@ -42,6 +51,8 @@ export class PostEditComponent implements OnInit {
       title: '',
       body: '',
       author: '',
+      image: null,
+      indexImg: null,
     };
 
     this.Pservice.getPostById(id).subscribe((data) => {
@@ -64,19 +75,67 @@ export class PostEditComponent implements OnInit {
   }
 
   public onSubmit(form: NgForm) {
-    const p = { ...form.value, date: new Date(), id: id };
+    this.isLoading = true;
+    const p = {
+      ...form.value,
+      date: new Date(),
+      id: id,
+      image:
+        this.link !== null && this.uploadProgress == 100
+          ? this.link
+          : this.post.image,
+    };
     console.log(p);
     this.Pservice.updatePost(p).subscribe(
       () => {
-        this.isLoading = true;
         setTimeout(() => {
-          this.isLoading = false;
-          this.route.navigate(['/posts']);
+          if (this.link !== null && this.uploadProgress == 100) {
+            this.isLoading = true;
+            this.route.navigate(['/posts']);
+          }
         }, 2000);
 
         form.reset();
       },
       (err) => (this.isError = err.message)
     );
+  }
+
+  //! file upload
+
+  public uploadFile(e: Event) {
+    this.isUploading = true;
+    console.log(e);
+
+    const file = e.target.files[0];
+    this.filePath = `/posts/${this.post.indexImg}`;
+    const fileRef = this.storage.ref(this.filePath);
+    if (this.filePath) {
+      const task = this.storage.upload(this.filePath, file);
+      task
+
+        .snapshotChanges()
+        .pipe(finalize(() => (this.downloadURL = fileRef.getDownloadURL())))
+        .subscribe(
+          (t) => {
+            fileRef.getDownloadURL().subscribe((link) => {
+              this.link = link;
+              console.log(link, 'new one to check');
+            });
+            this.link = this.downloadURL;
+            console.log('Down', this.downloadURL);
+          },
+          (err) => (this.isError = err.message),
+          () => {
+            // console.log('final link', this.downloadURL);
+          }
+        );
+      //! percentage
+      task.percentageChanges().subscribe((data) => {
+        this.uploadProgress = data;
+        console.log(data);
+        this.uploadProgress == 100 ? (this.isUploading = false) : '';
+      });
+    }
   }
 }

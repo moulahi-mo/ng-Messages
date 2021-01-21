@@ -1,4 +1,4 @@
-<section class="my-5">
+<section class="editPage my-5">
   <div class="row">
     <div class="col-12">
       <div class="d-flex justify-content-center">
@@ -58,6 +58,23 @@
         </mat-form-field>
 
         <div class="col-12" class="my-3">
+          <!--* File Upload ------------>
+          <input type="file" (change)="uploadFile($event)" />
+          <mat-progress-bar
+            *ngIf="uploadProgress !== null && uploadProgress < 100"
+            class="my-2 ml-3"
+            mode="determinate"
+            [value]="uploadProgress"
+            color="primary"
+          ></mat-progress-bar>
+          <!-- <a [href]="downloadURL | async">{{ downloadURL | async }}</a> -->
+          <img
+            *ngIf="link || post.image"
+            style="width: 300px; height: 300px"
+            class="img-fluid d-block mx-auto"
+            [src]="uploadProgress === 100 ? link : post.image"
+          />
+
           <!-- ! editor -->
           <ckeditor
             #editor
@@ -69,7 +86,10 @@
         </div>
 
         <button
-          [disabled]="postForm.invalid"
+          [disabled]="
+            postForm.invalid ||
+            (uploadProgress !== null && uploadProgress < 100)
+          "
           mat-raised-button
           color="primary"
           class="mx-auto d-block my-3"

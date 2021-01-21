@@ -31,6 +31,8 @@ export class PostsService {
               body: snap.payload.doc.data().body,
               author: snap.payload.doc.data().author,
               date: snap.payload.doc.data().date,
+              image: snap.payload.doc.data().image,
+              indexImg: snap.payload.doc.data().indexImg,
             };
           });
         })

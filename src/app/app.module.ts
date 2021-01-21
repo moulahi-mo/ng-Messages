@@ -48,6 +48,8 @@ import { PostAsideComponent } from './components/post-aside/post-aside.component
 import { FilterSearchComponent } from './components/filter-search/filter-search.component';
 import { PostsService } from './services/posts.service';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { FireStorageService } from './services/fire-storage.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -88,6 +90,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     AngularFirestoreModule,
     AngularFireAuthModule,
     CKEditorModule,
+    AngularFireStorageModule,
   ],
   providers: [
     MessagesService,
@@ -100,6 +103,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     LocalStorageService,
     UsersService,
     PostsService,
+    FireStorageService,
   ],
   bootstrap: [AppComponent],
 })

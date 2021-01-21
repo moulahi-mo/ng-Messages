@@ -80,4 +80,6 @@ export interface Post {
   body: string;
   thumbs?: number;
   date?: Date;
+  image?: string;
+  indexImg?: string;
 }
