@@ -1,22 +1,27 @@
 <mat-card
-  class="m-0 p-2 text-center d-flex flex-column justify-content-around w-75"
+  class="m-0 p-2 text-center d-flex flex-column justify-content-around w-100 mx-auto dflex"
   [ngClass]="
-    wheather.icon.includes('n') ? 'bg-dark text-light' : 'bg-light text-dark'
+    wheather.icon?.includes('n') ? 'bg-dark text-light' : 'bg-light text-dark'
   "
 >
-  <p class="text-muted text-center">Current Weather</p>
+  <p class="text-center lead font-weight-bold text-c2">Current Weather</p>
   <div class="d-flex justify-content-around">
-    <span class="text-warn"> Temp : {{ wheather.temp }} °C </span>
-    <span class="text-primary">
-      {{ wheather.description | titlecase }}
+    <span class="mx-3">
+      Temp : <span class="text-c2">{{ wheather.temp }} </span> °C
     </span>
-    <span> Humidity : {{ wheather.humidity }} </span>
+
+    <span class="mr-3">
+      Humidity : <span class="text-c3">{{ wheather.humidity }} </span>
+    </span>
   </div>
 
   <div class="w-100 bg-white d-flex flex-column justify-content-around">
-    <p class="text-center text-muted">
-      {{ wheather.icon.includes("n") ? "Night" : "Day" }}
+    <p class="text-center text-muted mt-3">
+      {{ wheather.icon?.includes("n") ? "Night" : "Day" }}
     </p>
+    <span class="text-primary">
+      {{ wheather.description | titlecase }}
+    </span>
     <img
       src="http://openweathermap.org/img/wn/{{ wheather.icon }}@2x.png"
       alt=""

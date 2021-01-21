@@ -8,15 +8,13 @@ import { map, tap } from 'rxjs/operators';
 export class WheatherService {
   emitWheather = new Subject<any>();
   city: string = null;
-  // apiKey = `api.openweathermap.org/data/2.5/weather?q=${this.city}&appid=995cc6f35016835b933f7d52a016e299`;
+
   whClient: object = {};
   IpUrl: string = 'https://api.ipify.org/?format=json';
   constructor(private http: HttpClient) {}
 
   public getIp() {
     this.http.get<any>(this.IpUrl).subscribe((data) => {
-      // console.log(data.ip);
-      // this.ipClient = data.ip;
       this.getCityInfos(data.ip)
         .pipe(
           map((data) => {
@@ -28,7 +26,6 @@ export class WheatherService {
           })
         )
         .subscribe((data) => {
-          // this.city = data.city;
           this.getCityWeather(
             `https://api.openweathermap.org/data/2.5/weather?q=${data.city}&units=metric&appid=995cc6f35016835b933f7d52a016e299`
           )
@@ -47,16 +44,9 @@ export class WheatherService {
             });
         });
     });
-
-    // return this.whClient;
   }
   public getCityInfos(ip: string): Observable<any> {
     return this.http.get<any>(`https://ipapi.co/${ip}/json`);
-    // .pipe(
-    //   tap((data) => {
-    //     console.log(data);
-    //   })
-    // );
   }
 
   public getCityWeather(link: string): Observable<any> {

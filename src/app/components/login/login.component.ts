@@ -14,6 +14,7 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -60,6 +61,7 @@ export class LoginComponent implements OnInit {
       )
       .then((data) => {
         console.log(data, 'auth success');
+
         this.isLoading = false;
         this.route.navigate(['/']);
         this.snackBar.open(
@@ -71,6 +73,7 @@ export class LoginComponent implements OnInit {
             verticalPosition: this.verticalPosition,
           }
         );
+        this.loginForm.reset();
       })
       .catch((err) => {
         this.isLoading = false;

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { timeStamp } from 'console';
+
 import { Subscription } from 'rxjs';
 import { WheatherService } from 'src/app/services/wheather.service';
 
@@ -10,7 +10,7 @@ import { WheatherService } from 'src/app/services/wheather.service';
 })
 export class WheatherComponent implements OnInit, OnDestroy {
   unsb: Subscription;
-  wheatherIcon: string = `http://openweathermap.org/img/wn/${'02n'}@2x.png`;
+  // wheatherIcon: string = `http://openweathermap.org/img/wn/${'02n'}@2x.png`;
   wheather: {
     temp: string;
     humidity: string;

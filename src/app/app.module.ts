@@ -7,8 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './components/login/login.component';
-import { MessagesComponent } from './components/messages/messages.component';
-import { TestComponent } from './material/test/test.component';
 
 import { MessagesService } from './services/messages.service';
 import { AuthService } from './services/auth.service';
@@ -22,7 +20,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { SignupComponent } from './components/signup/signup.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { InboxComponent } from './components/inbox/inbox.component';
+
 import { NewsComponent } from './components/news/news.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AuthGuard } from './shared/auth.guard';
@@ -52,16 +50,16 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { FireStorageService } from './services/fire-storage.service';
 import { WheatherComponent } from './components/wheather/wheather.component';
 import { WheatherService } from './services/wheather.service';
+import { AdminGuard } from './shared/admin.guard';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    MessagesComponent,
-    TestComponent,
+
     SignupComponent,
     NavbarComponent,
     ToolbarComponent,
-    InboxComponent,
+
     NewsComponent,
     SettingsComponent,
     NotFoundComponent,
@@ -108,6 +106,7 @@ import { WheatherService } from './services/wheather.service';
     PostsService,
     FireStorageService,
     WheatherService,
+    AdminGuard,
   ],
   bootstrap: [AppComponent],
 })

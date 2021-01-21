@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MessagesComponent } from './components/messages/messages.component';
+
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { AuthGuard } from './shared/auth.guard';
 
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { NewsComponent } from './components/news/news.component';
-import { InboxComponent } from './components/inbox/inbox.component';
+
 import { SettingsComponent } from './components/settings/settings.component';
 import { AboutComponent } from './components/about/about.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
@@ -22,22 +22,11 @@ import { PostAddComponent } from './components/post-add/post-add.component';
 import { PostEditComponent } from './components/post-edit/post-edit.component';
 const routes: Routes = [
   { path: '', redirectTo: '/posts', pathMatch: 'full' },
-  { path: 'authors', component: AuthorsComponent, canActivate: [AuthGuard] },
-  // {
-  //   path: 'messages',
-  //   component: MessagesComponent,
-  //   canActivate: [AuthGuard],
-  //   children: [{ path: 'inbox', component: InboxComponent }],
-  // },
+
   {
     path: 'posts',
     component: PostsComponent,
-    // children: [
-    //   {
-    //     path: '/:id',
-    //     component: PostAsideComponent,
-    //   },
-    // ],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'posts/edit/:id',
@@ -49,6 +38,7 @@ const routes: Routes = [
     component: PostAddComponent,
     canActivate: [AuthGuard],
   },
+  { path: 'authors', component: AuthorsComponent, canActivate: [AuthGuard] },
   {
     path: 'authors/add',
     component: AuthorsAddComponent,
