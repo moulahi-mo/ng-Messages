@@ -89,10 +89,10 @@ export class PostEditComponent implements OnInit {
     this.Pservice.updatePost(p).subscribe(
       () => {
         setTimeout(() => {
-          if (this.link !== null && this.uploadProgress == 100) {
-            this.isLoading = true;
-            this.route.navigate(['/posts']);
-          }
+          // if (this.link !== null && this.uploadProgress == 100) {
+          this.isLoading = false;
+          this.route.navigate(['/posts']);
+          // }
         }, 2000);
 
         form.reset();

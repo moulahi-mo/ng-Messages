@@ -78,13 +78,12 @@ export class PostAddComponent implements OnInit {
     this.Pservice.addPost(p).subscribe(
       (data) => {
         this.id = data.id;
-        // this.filePath = `/posts/${this.id}`;
-        // this.uploadFile(event);
+
         console.log('data here', data);
 
         setTimeout(() => {
-          if (this.link !== null && this.uploadProgress == 100) {
-            this.isLoading = true;
+          if (this.link == null || this.uploadProgress == 100) {
+            this.isLoading = false;
             this.route.navigate(['/posts']);
           }
         }, 2000);

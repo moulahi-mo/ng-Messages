@@ -14,7 +14,7 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
-
+import { AngularFireStorage } from '@angular/fire/storage';
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
@@ -37,7 +37,8 @@ export class PostsComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private Pservice: PostsService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private storage: AngularFireStorage
   ) {}
 
   ngOnInit(): void {
@@ -91,10 +92,17 @@ export class PostsComponent implements OnInit {
   }
 
   //!  on delete
-  public onDelete(id: string) {
+  public onDelete(id: string, post: Post) {
     if (confirm('Are you sure ?')) {
       this.Pservice.deletePost(id)
         .then(() => {
+          const filePath = `/posts/${post.indexImg}`;
+          this.storage
+            .ref(filePath)
+            .delete()
+            .subscribe((data) => {
+              console.log(data, 'image deleted alsso');
+            });
           //* snackbar
           this.snackBar.open('post deleted ..', 'undo', {
             duration: 4000,

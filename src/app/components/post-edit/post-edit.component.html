@@ -59,7 +59,8 @@
 
         <div class="col-12" class="my-3">
           <!--* File Upload ------------>
-          <input type="file" (change)="uploadFile($event)" />
+          <label class="d-block pb-3 text-muted">Upload image</label>
+          <input type="file" (change)="uploadFile($event)" class="mb-3" />
           <mat-progress-bar
             *ngIf="uploadProgress !== null && uploadProgress < 100"
             class="my-2 ml-3"

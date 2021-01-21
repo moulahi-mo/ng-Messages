@@ -10,7 +10,7 @@
   </section>
   <!-- ! posts -->
   <article class="col-12 my-5" *ngFor="let post of posts; index as i">
-    <mat-card #card [id]="i" class="">
+    <mat-card #card [id]="i" class="shadow-lg rounded-lg">
       <mat-card-header
         [ngClass]="
           isAuth
@@ -33,14 +33,18 @@
           >
             create
           </mat-icon>
-          <mat-icon (click)="onDelete(post.id)" color="accent" class="h3">
+          <mat-icon (click)="onDelete(post.id, post)" color="accent" class="h3">
             remove_circle</mat-icon
           >
         </div>
       </mat-card-header>
-      <img mat-card-image [src]="post.image" />
+      <img
+        class="imgCard img-fluid img-thumbnail d-flex mx-md-auto"
+        mat-card-image
+        [src]="post.image"
+      />
       <mat-card-content class="text-break">
-        <p>
+        <p class="mx-5">
           {{ bodyInner[i] | titlecase }}
         </p>
       </mat-card-content>
