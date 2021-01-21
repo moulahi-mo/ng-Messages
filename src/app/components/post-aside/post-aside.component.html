@@ -1,12 +1,4 @@
 <aside class="d-flex justify-content-between">
-  <mat-list-item class="text-center text-muted mr-5">
-    <mat-card class="m-0 p-2">
-      Weather
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae, omnis!
-      </p>
-    </mat-card>
-  </mat-list-item>
   <mat-list-item *ngIf="isAuth" class="text-center text-muted">
     <button [routerLink]="['/posts', 'add']" mat-flat-button color="primary">
       Add New Post

@@ -1,0 +1,26 @@
+<mat-card
+  class="m-0 p-2 text-center d-flex flex-column justify-content-around w-75"
+  [ngClass]="
+    wheather.icon.includes('n') ? 'bg-dark text-light' : 'bg-light text-dark'
+  "
+>
+  <p class="text-muted text-center">Current Weather</p>
+  <div class="d-flex justify-content-around">
+    <span class="text-warn"> Temp : {{ wheather.temp }} °C </span>
+    <span class="text-primary">
+      {{ wheather.description | titlecase }}
+    </span>
+    <span> Humidity : {{ wheather.humidity }} </span>
+  </div>
+
+  <div class="w-100 bg-white d-flex flex-column justify-content-around">
+    <p class="text-center text-muted">
+      {{ wheather.icon.includes("n") ? "Night" : "Day" }}
+    </p>
+    <img
+      src="http://openweathermap.org/img/wn/{{ wheather.icon }}@2x.png"
+      alt=""
+      class="img-fluid d-block mx-auto"
+    />
+  </div>
+</mat-card>

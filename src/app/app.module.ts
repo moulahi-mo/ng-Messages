@@ -50,6 +50,8 @@ import { PostsService } from './services/posts.service';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { FireStorageService } from './services/fire-storage.service';
+import { WheatherComponent } from './components/wheather/wheather.component';
+import { WheatherService } from './services/wheather.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,6 +78,7 @@ import { FireStorageService } from './services/fire-storage.service';
     PostEditComponent,
     PostAsideComponent,
     FilterSearchComponent,
+    WheatherComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,6 +107,7 @@ import { FireStorageService } from './services/fire-storage.service';
     UsersService,
     PostsService,
     FireStorageService,
+    WheatherService,
   ],
   bootstrap: [AppComponent],
 })

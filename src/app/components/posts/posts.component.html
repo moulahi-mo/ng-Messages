@@ -4,9 +4,12 @@
 
 <section class="row">
   <!-- ! aside -->
-  <section class="col-12 d-flex justify-content-between">
+  <section
+    class="col-12 d-flex flex-column flex-sm-row justify-content-between align-items-center"
+  >
     <app-filter-search (onSearch)="filtring($event)"></app-filter-search>
-    <app-post-aside [isAuth]="isAuth"></app-post-aside>
+    <app-wheather class="my-3"></app-wheather>
+    <app-post-aside class="mt-2" [isAuth]="isAuth"></app-post-aside>
   </section>
   <!-- ! posts -->
   <article class="col-12 my-5" *ngFor="let post of posts; index as i">
