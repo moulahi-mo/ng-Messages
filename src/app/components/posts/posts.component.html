@@ -11,6 +11,11 @@
 >
   Please Login or Signup to see the content thank You !
 </p>
+<!-- ? if error -->
+<div *ngIf="isError" class="mt-5 alert alert-danger text-center my-5">
+  <h4>{{ isError }}</h4>
+</div>
+
 <section class="row body">
   <!-- ! aside -->
   <section
@@ -28,22 +33,28 @@
       [isAuth]="isAuth"
       [userId]="userId"
     ></app-post-aside> -->
-
-    <aside class="d-flex justify-content-between">
-      <mat-list-item *ngIf="isAuth" class="text-center text-muted">
-        <button
-          [routerLink]="['/posts', 'add', userId]"
-          mat-flat-button
-          color="primary"
-        >
-          Add New Post
-        </button>
-      </mat-list-item>
-    </aside>
+    <div *ngIf="!settingsAdd">
+      <aside *ngIf="isAuth" class="d-flex justify-content-between">
+        <mat-list-item class="text-center text-muted">
+          <button
+            [routerLink]="['/posts', 'add', userId]"
+            mat-flat-button
+            color="primary"
+          >
+            Add New Post
+          </button>
+        </mat-list-item>
+      </aside>
+    </div>
   </section>
   <!-- ! posts -->
   <article class="col-12 my-5" *ngFor="let post of posts; index as i">
-    <mat-card #card [id]="i" class="shadow-lg rounded-lg">
+    <mat-card
+      *ngIf="posts.length > 0; else noPosts"
+      #card
+      [id]="i"
+      class="shadow-lg rounded-lg"
+    >
       <mat-card-header
         [ngClass]="
           isAuth
@@ -60,13 +71,19 @@
 
         <div class="d-flex justify-content-around" *ngIf="isAuth">
           <mat-icon
+            *ngIf="!settingsEdit"
             [routerLink]="['/posts', 'edit', post.id]"
             color="primary"
             class="mr-2 h3"
           >
             create
           </mat-icon>
-          <mat-icon (click)="onDelete(post.id, post)" color="accent" class="h3">
+          <mat-icon
+            *ngIf="!settingsDelete"
+            (click)="onDelete(post.id, post)"
+            color="accent"
+            class="h3"
+          >
             remove_circle</mat-icon
           >
         </div>
@@ -103,7 +120,16 @@
   </article>
 </section>
 
-<!-- ? if error -->
-<div *ngIf="isError" class="mt-5 alert alert-danger text-center my-5">
-  <h4>{{ isError }}</h4>
-</div>
+<!-- * no posts -->
+<ng-template #noPosts>
+  <div
+    class="alert alert-info mx-auto alert-dismissible fade show"
+    role="alert"
+  >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      <span class="sr-only">Close</span>
+    </button>
+    <strong>No posts</strong>found actually in our database !!.
+  </div>
+</ng-template>

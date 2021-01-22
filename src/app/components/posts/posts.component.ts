@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   Renderer2,
   ViewChild,
@@ -22,6 +23,8 @@ import {
   style,
   animate,
 } from '@angular/animations';
+import { SettingsService } from 'src/app/services/settings.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-posts',
@@ -45,7 +48,7 @@ import {
     ]),
   ],
 })
-export class PostsComponent implements OnInit {
+export class PostsComponent implements OnInit, OnDestroy {
   @ViewChild('secret') secret: ElementRef;
   fade: boolean = false;
 
@@ -54,6 +57,7 @@ export class PostsComponent implements OnInit {
   isError: string = null;
   isLoading: boolean = false;
   isAuth: boolean;
+  unsb: Subscription;
   userId: string = null;
   post: Post;
   indexDown: number = null;
@@ -62,18 +66,32 @@ export class PostsComponent implements OnInit {
   isThumbUp: boolean = true;
   isThumbDown: boolean = false;
   bodyInner: string[];
+  settingsAdd: boolean = false;
+  settingsEdit: boolean = false;
+  settingsDelete: boolean = false;
   constructor(
     private auth: AuthService,
     private Pservice: PostsService,
     private snackBar: MatSnackBar,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private set: SettingsService
   ) {}
 
   ngOnInit(): void {
+    this.set.getSettings().subscribe();
+    this.unsb = this.set.settingsEmit.subscribe((set) => {
+      if (set.posts.length > 0) {
+        this.settingsAdd = set.posts.includes('Adding posts');
+        this.settingsEdit = set.posts.includes('Editing posts');
+        this.settingsDelete = set.posts.includes('Deleting posts');
+      }
+    });
+
     this.auth.authState().subscribe(
       (user) => {
         if (user) {
           this.userId = user.uid;
+          console.log('userid', this.userId);
           this.isAuth = true;
           this.fetchPosts();
           this.fade = true;
@@ -93,6 +111,7 @@ export class PostsComponent implements OnInit {
       (data) => {
         console.log(data);
         this.posts = data;
+
         this.bodyInner = this.posts.map((item) => {
           const bd = document.createElement('p');
           bd.innerHTML += item.body;
@@ -153,5 +172,9 @@ export class PostsComponent implements OnInit {
   public onThumbUp(i: number) {
     this.isThumbUp = !this.isThumbUp;
     this.indexUp = i;
+  }
+
+  ngOnDestroy() {
+    this.unsb.unsubscribe();
   }
 }

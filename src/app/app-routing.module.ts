@@ -17,7 +17,7 @@ import { AuthorsComponent } from './components/authors/authors.component';
 import { AuthorsAddComponent } from './components/authors-add/authors-add.component';
 import { AuthorsEditComponent } from './components/authors-edit/authors-edit.component';
 import { AuthorsDetailsComponent } from './components/authors-details/authors-details.component';
-import { PostAsideComponent } from './components/post-aside/post-aside.component';
+
 import { PostAddComponent } from './components/post-add/post-add.component';
 import { PostEditComponent } from './components/post-edit/post-edit.component';
 import { AdminGuard } from './shared/admin.guard';

@@ -35,12 +35,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     'Deleting authors',
     'Hide authors section',
   ];
-  posts: string[] = [
-    'Adding posts',
-    'Editing posts',
-    'Deleting posts',
-    'Hide posts section',
-  ];
+  posts: string[] = ['Adding posts', 'Editing posts', 'Deleting posts'];
   horizontalPosition: MatSnackBarHorizontalPosition = 'left';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   constructor(

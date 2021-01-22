@@ -83,4 +83,5 @@ export interface Post {
   date?: Date;
   image?: string;
   indexImg?: string;
+  userId: string;
 }

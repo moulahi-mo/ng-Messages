@@ -42,7 +42,7 @@ import { UsersService } from './services/users.service';
 import { AuthorsDetailsComponent } from './components/authors-details/authors-details.component';
 import { PostAddComponent } from './components/post-add/post-add.component';
 import { PostEditComponent } from './components/post-edit/post-edit.component';
-import { PostAsideComponent } from './components/post-aside/post-aside.component';
+
 import { FilterSearchComponent } from './components/filter-search/filter-search.component';
 import { PostsService } from './services/posts.service';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
@@ -76,7 +76,7 @@ import * as newReducer from './store/admin.reducer';
     AuthorsDetailsComponent,
     PostAddComponent,
     PostEditComponent,
-    PostAsideComponent,
+
     FilterSearchComponent,
     WheatherComponent,
   ],

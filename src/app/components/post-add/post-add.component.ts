@@ -23,6 +23,7 @@ export class PostAddComponent implements OnInit {
   profileUrl: any;
   data: string;
   post: Post;
+  identic: boolean = false;
   userId: string = null;
   uploadProgress: number = null;
   id: string = null;
@@ -54,6 +55,7 @@ export class PostAddComponent implements OnInit {
       title: '',
       body: '',
       author: '',
+      userId: '',
     };
 
     this.authors.fetchAuthors().subscribe((data) => {
