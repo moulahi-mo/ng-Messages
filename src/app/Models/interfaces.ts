@@ -57,6 +57,7 @@ export interface Settings {
   authors: string[];
   posts: string[];
   title: string;
+  admin?: string;
 }
 export interface User {
   id?: string;

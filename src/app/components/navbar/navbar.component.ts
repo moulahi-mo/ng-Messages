@@ -30,6 +30,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isLogout: boolean = false;
   badge: number = 0;
   unsb: Subscription;
+  @Input() isAdmin: boolean;
   @Output() onSignOut: EventEmitter<boolean> = new EventEmitter();
   @Input() sideNav: MatSidenav;
   @Input() authState: boolean;

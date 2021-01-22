@@ -51,6 +51,8 @@ import { FireStorageService } from './services/fire-storage.service';
 import { WheatherComponent } from './components/wheather/wheather.component';
 import { WheatherService } from './services/wheather.service';
 import { AdminGuard } from './shared/admin.guard';
+import { StoreModule } from '@ngrx/store';
+import * as newReducer from './store/admin.reducer';
 @NgModule({
   declarations: [
     AppComponent,
@@ -92,6 +94,7 @@ import { AdminGuard } from './shared/admin.guard';
     AngularFireAuthModule,
     CKEditorModule,
     AngularFireStorageModule,
+    StoreModule.forRoot({ adminR: newReducer.isAdminReducer }),
   ],
   providers: [
     MessagesService,

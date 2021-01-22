@@ -140,6 +140,7 @@
         <span>Account</span>
       </button>
       <button
+        *ngIf="isAdmin"
         mat-menu-item
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"

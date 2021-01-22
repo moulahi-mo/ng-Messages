@@ -73,7 +73,7 @@ export class NewsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.getNews('general');
+    this.getNews('trends');
     this.paginator.page.subscribe((event) => console.log(event));
   }
   public getNews(t?: string) {

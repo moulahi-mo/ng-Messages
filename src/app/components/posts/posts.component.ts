@@ -15,18 +15,46 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { AngularFireStorage } from '@angular/fire/storage';
+import {
+  trigger,
+  state,
+  transition,
+  style,
+  animate,
+} from '@angular/animations';
+
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.scss'],
+  animations: [
+    trigger('intro', [
+      state(
+        'fadeIn',
+        style({
+          opacity: 0.2,
+        })
+      ),
+      state(
+        'fadeOut',
+        style({
+          opacity: 0.8,
+        })
+      ),
+      transition('fadeIn <=>fadeOut', animate(1000)),
+    ]),
+  ],
 })
 export class PostsComponent implements OnInit {
   @ViewChild('secret') secret: ElementRef;
+  fade: boolean = false;
+
   horizontalPosition: MatSnackBarHorizontalPosition = 'left';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   isError: string = null;
   isLoading: boolean = false;
   isAuth: boolean;
+  userId: string = null;
   post: Post;
   indexDown: number = null;
   indexUp: number = null;
@@ -45,11 +73,14 @@ export class PostsComponent implements OnInit {
     this.auth.authState().subscribe(
       (user) => {
         if (user) {
+          this.userId = user.uid;
           this.isAuth = true;
           this.fetchPosts();
+          this.fade = true;
           //* init posts
         } else {
           this.isAuth = false;
+          this.fade = true;
         }
       },
       (err) => (this.isError = err.message)

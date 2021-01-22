@@ -29,6 +29,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   @Input() sideNav: MatSidenav;
+  @Input() isAdmin: boolean;
 
   constructor(
     private fav: FavoritesService,

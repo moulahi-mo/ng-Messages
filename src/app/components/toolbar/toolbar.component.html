@@ -100,6 +100,7 @@
           <span>Account</span>
         </button>
         <button
+          *ngIf="isAdmin"
           mat-menu-item
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
@@ -108,9 +109,9 @@
           <mat-icon>rule</mat-icon>
           <span>Settings</span>
         </button>
-        <button mat-menu-item>
+        <button (click)="onLogout()" mat-menu-item>
           <mat-icon>input</mat-icon>
-          <span (click)="onLogout()">Logout</span>
+          <span>Logout</span>
         </button>
       </mat-menu>
     </div>

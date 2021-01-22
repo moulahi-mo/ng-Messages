@@ -10,6 +10,9 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { fromEvent, Observable, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import * as appActions from '../../store/admin.action';
+
 let widthListner = fromEvent(window, 'resize');
 @Component({
   selector: 'app-settings',
@@ -19,6 +22,7 @@ let widthListner = fromEvent(window, 'resize');
 export class SettingsComponent implements OnInit, OnDestroy {
   @ViewChild('selectP') selectP: MatSelectionList;
   @ViewChild('settingForm') setForm: NgForm;
+  admin$: Observable<boolean>;
   listChoice: Settings;
   toppings = new FormControl();
   changeFlex: number = 2;
@@ -39,9 +43,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
   ];
   horizontalPosition: MatSnackBarHorizontalPosition = 'left';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-  constructor(private set: SettingsService, private snackBar: MatSnackBar) {}
+  constructor(
+    private set: SettingsService,
+    private snackBar: MatSnackBar,
+    private store: Store<{ adminReducer: boolean }>
+  ) {}
 
   ngOnInit(): void {
+    this.admin$ = this.store.select('adminReducer');
     this.unsb = widthListner.subscribe((data) => {
       if (data.target.innerWidth < 600) {
         this.changeFlex = 1;

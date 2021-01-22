@@ -20,6 +20,7 @@ import { AuthorsDetailsComponent } from './components/authors-details/authors-de
 import { PostAsideComponent } from './components/post-aside/post-aside.component';
 import { PostAddComponent } from './components/post-add/post-add.component';
 import { PostEditComponent } from './components/post-edit/post-edit.component';
+import { AdminGuard } from './shared/admin.guard';
 const routes: Routes = [
   { path: '', redirectTo: '/posts', pathMatch: 'full' },
 
@@ -34,7 +35,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'posts/add',
+    path: 'posts/add/:id',
     component: PostAddComponent,
     canActivate: [AuthGuard],
   },
@@ -54,7 +55,11 @@ const routes: Routes = [
     component: AuthorsDetailsComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
+  {
+    path: 'settings',
+    component: SettingsComponent,
+    canActivate: [AuthGuard, AdminGuard],
+  },
   { path: 'news', component: NewsComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },

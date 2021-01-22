@@ -1,7 +1,12 @@
-<h2 class="text-center text-c1 my-5 display-4">Latest Posts..</h2>
+<h2
+  class="text-center text-c1 my-5 display-4"
+  [@intro]="!fade ? 'fadeIn' : 'fadeOut'"
+>
+  Latest Posts..
+</h2>
 <p
   id="wait"
-  [ngClass]="!isAuth ? 'visible' : 'invisible'"
+  [ngStyle]="{ opacity: !isAuth ? '1 !important' : '0' }"
   class="lead font-weight-normal text-center text-c3"
 >
   Please Login or Signup to see the content thank You !
@@ -12,9 +17,29 @@
     *ngIf="isAuth"
     class="col-12 d-flex flex-column flex-sm-row justify-content-between align-items-center"
   >
-    <app-filter-search (onSearch)="filtring($event)"></app-filter-search>
-    <app-wheather class="my-3"></app-wheather>
-    <app-post-aside class="mt-2" [isAuth]="isAuth"></app-post-aside>
+    <app-filter-search
+      class=""
+      (onSearch)="filtring($event)"
+    ></app-filter-search>
+    <app-wheather class="my-3 shadow-lg rounded-lg"></app-wheather>
+
+    <!-- <app-post-aside
+      class="mt-2 shadow-lg rounded-0"
+      [isAuth]="isAuth"
+      [userId]="userId"
+    ></app-post-aside> -->
+
+    <aside class="d-flex justify-content-between">
+      <mat-list-item *ngIf="isAuth" class="text-center text-muted">
+        <button
+          [routerLink]="['/posts', 'add', userId]"
+          mat-flat-button
+          color="primary"
+        >
+          Add New Post
+        </button>
+      </mat-list-item>
+    </aside>
   </section>
   <!-- ! posts -->
   <article class="col-12 my-5" *ngFor="let post of posts; index as i">

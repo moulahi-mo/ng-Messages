@@ -5,11 +5,12 @@ import { Authors, Post } from 'src/app/Models/interfaces';
 import { AuthorsService } from 'src/app/services/authors.service';
 import { NgForm } from '@angular/forms';
 import { PostsService } from 'src/app/services/posts.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FireStorageService } from 'src/app/services/fire-storage.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { finalize } from 'rxjs/operators';
 import { uniqueid } from '../../shared/functions';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-post-add',
   templateUrl: './post-add.component.html',
@@ -22,6 +23,7 @@ export class PostAddComponent implements OnInit {
   profileUrl: any;
   data: string;
   post: Post;
+  userId: string = null;
   uploadProgress: number = null;
   id: string = null;
   isError: string = null;
@@ -41,10 +43,13 @@ export class PostAddComponent implements OnInit {
     private storage: AngularFireStorage,
     private authors: AuthorsService,
     private Pservice: PostsService,
-    private route: Router
+    private route: Router,
+    private active: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.userId = this.active.snapshot.paramMap.get('id');
+
     this.post = {
       title: '',
       body: '',
@@ -73,6 +78,7 @@ export class PostAddComponent implements OnInit {
       image:
         this.link !== null && this.uploadProgress == 100 ? this.link : null,
       indexImg: this.index,
+      userId: this.userId,
     };
     console.log(p);
     this.Pservice.addPost(p).subscribe(

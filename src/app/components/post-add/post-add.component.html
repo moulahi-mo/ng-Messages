@@ -59,8 +59,28 @@
 
         <div class="col-12" class="my-3">
           <!--* File Upload ------------>
-          <label class="d-block pb-3 text-muted">Upload image</label>
-          <input type="file" (change)="uploadFile($event)" class="mb-3" />
+
+          <label class="d-block pb-2 text-muted">Upload image</label>
+          <div class="input-container mb-3">
+            <button #file mat-flat-button color="primary">
+              Choose image...
+              <input
+                style="
+                  cursor: pointer !important;
+                  opacity: 0;
+                  position: absolute;
+                  left: 0px;
+                  top: 0px;
+                  width: 100%;
+                  height: 100%;
+                "
+                type="file"
+                (change)="uploadFile($event)"
+              />
+            </button>
+          </div>
+
+          <!-- <input type="file" /> -->
           <mat-progress-bar
             *ngIf="uploadProgress !== null && uploadProgress < 100"
             class="my-2 ml-3"

@@ -1,13 +1,18 @@
 <mat-sidenav-container>
   <mat-sidenav #sideNav mode="side" class="pl-3">
     <app-navbar
+      [isAdmin]="admin$"
       [authState]="isAuth"
       [sideNav]="side"
       (onSignOut)="onLogout($event)"
     ></app-navbar>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-toolbar [sideNav]="side" [authState]="isAuth"></app-toolbar>
+    <app-toolbar
+      [sideNav]="side"
+      [authState]="isAuth"
+      [isAdmin]="admin$"
+    ></app-toolbar>
     <div class="container">
       <flash-messages></flash-messages>
       <router-outlet></router-outlet>

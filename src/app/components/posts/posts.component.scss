@@ -5,6 +5,6 @@
 .body {
   min-height: 100vh !important;
 }
-// #wait {
-//   display: none !important;
-// }
+#wait {
+  opacity: 0;
+}
