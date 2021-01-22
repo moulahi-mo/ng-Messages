@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import {
   FormControl,
   FormBuilder,
@@ -15,13 +15,37 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { throwError } from 'rxjs';
-
+import {
+  trigger,
+  state,
+  transition,
+  style,
+  animate,
+} from '@angular/animations';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  animations: [
+    trigger('intro', [
+      state(
+        'fadeIn',
+        style({
+          opacity: 0,
+        })
+      ),
+      state(
+        'fadeOut',
+        style({
+          opacity: 1,
+        })
+      ),
+      transition('fadeIn <=> fadeOut', animate(1500)),
+    ]),
+  ],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
+  fade: boolean = false;
   hide: boolean = true;
   loginForm: FormGroup;
   user: Login;
@@ -51,6 +75,11 @@ export class LoginComponent implements OnInit {
       ],
     });
   }
+
+  ngAfterViewInit() {
+    this.fade = true;
+  }
+
   public onSubmit() {
     console.log(this.loginForm.value);
     this.isLoading = true;

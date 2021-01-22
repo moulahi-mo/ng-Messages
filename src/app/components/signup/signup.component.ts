@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import {
   FormControl,
   FormArray,
@@ -17,12 +17,37 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { UsersService } from 'src/app/services/users.service';
+import {
+  trigger,
+  state,
+  transition,
+  style,
+  animate,
+} from '@angular/animations';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
+  animations: [
+    trigger('intro', [
+      state(
+        'fadeIn',
+        style({
+          opacity: 0,
+        })
+      ),
+      state(
+        'fadeOut',
+        style({
+          opacity: 1,
+        })
+      ),
+      transition('fadeIn <=> fadeOut', animate(1500)),
+    ]),
+  ],
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, AfterViewInit {
+  fade: boolean = false;
   newUser: User;
   hide: boolean = true;
   hidec: boolean = true;
@@ -77,6 +102,10 @@ export class SignupComponent implements OnInit {
       }),
       hobbies: this.fb.array([]),
     });
+  }
+
+  ngAfterViewInit() {
+    this.fade = true;
   }
 
   public onHobby() {
