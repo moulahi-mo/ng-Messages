@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
@@ -23,12 +23,10 @@ import { PostEditComponent } from './components/post-edit/post-edit.component';
 import { AdminGuard } from './shared/admin.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/posts', pathMatch: 'full' },
-
+  { path: '', component: PostsComponent },
   {
     path: 'posts',
     component: PostsComponent,
-    // canActivate: [AuthGuard],
   },
   {
     path: 'posts/edit/:id',
@@ -75,7 +73,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
