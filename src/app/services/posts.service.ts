@@ -23,7 +23,7 @@ export class PostsService {
       .snapshotChanges()
       .pipe(
         map((snaps) => {
-          return snaps.map((snap) => {
+          return snaps.map((snap: any) => {
             console.log(snap.payload.doc.id, snap.payload.doc.data().title);
             return {
               id: snap.payload.doc.id,

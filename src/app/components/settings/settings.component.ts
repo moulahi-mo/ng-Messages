@@ -47,7 +47,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.admin$ = this.store.select('adminReducer');
     this.unsb = widthListner.subscribe((data) => {
-      if (data.target.innerWidth < 600) {
+      if ((data.target as Window).innerWidth < 600) {
         this.changeFlex = 1;
       } else {
         this.changeFlex = 2;

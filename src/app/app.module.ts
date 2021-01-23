@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './components/login/login.component';
 
-import { MessagesService } from './services/messages.service';
 import { AuthService } from './services/auth.service';
 import { MaterialModule } from './shared/material.module';
 import { FlashMessagesModule } from 'angular2-flash-messages';

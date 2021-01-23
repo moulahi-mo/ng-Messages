@@ -14,7 +14,18 @@
     ></app-search-box>
   </nav>
 
-  <mat-tab-group dynamicHeight>
+  <!-- ? if error -->
+  <div
+    *ngIf="isError && !close"
+    class="mt-5 alert text-center alert-danger text-center my-5"
+  >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span (click)="close = !close" aria-hidden="true">&times;</span>
+    </button>
+    <h4>{{ isError }}</h4>
+  </div>
+
+  <mat-tab-group dynamicHeight *ngIf="!isError">
     <mat-tab *ngFor="let label of tabs">
       <ng-template mat-tab-label>
         <a (click)="getCategory(label)" class="text-decoration-none text-dark">

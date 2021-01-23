@@ -38,7 +38,7 @@ export class SearchBoxComponent implements OnInit {
   }
   //! init fetching articles articles
   public initArticles(t?: string) {
-    this.nw.fetchNews(t).subscribe((news) => {
+    this.nw.fetchNews(t).subscribe((news: any) => {
       this.news = news.articles;
       const list = news.articles.map((article) => {
         let m = article.title;
@@ -64,7 +64,7 @@ export class SearchBoxComponent implements OnInit {
     let q = this.fetchForm.value.query.toLowerCase().trim();
     console.log(q);
     this.nw.fetchNews(q).subscribe(
-      (data) => {
+      (data: any) => {
         this.listSearch = data.articles;
         console.log(this.listSearch);
         this.onFetch.emit(this.listSearch);

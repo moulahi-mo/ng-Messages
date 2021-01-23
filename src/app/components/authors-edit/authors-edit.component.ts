@@ -13,13 +13,18 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthorsService } from 'src/app/services/authors.service';
-
+declare global {
+  interface Date {
+    toDate: () => Date;
+  }
+}
 @Component({
   selector: 'app-authors-edit',
   templateUrl: './authors-edit.component.html',
   styleUrls: ['./authors-edit.component.scss'],
 })
 export class AuthorsEditComponent implements OnInit, AfterViewInit {
+  date: any;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   finalFormGroup: FormGroup;

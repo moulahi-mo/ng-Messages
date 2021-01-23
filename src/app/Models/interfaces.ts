@@ -22,6 +22,7 @@ export type News = {
   url: string;
   urlToImage: string;
   addedDate?: Date;
+  articles?: any;
 };
 
 export interface Authors {
@@ -31,7 +32,7 @@ export interface Authors {
   email: string;
   status?: string;
   isActive?: boolean;
-  joind?: Date | string;
+  joind?: Date;
   created?: Date;
   address: {
     street: string;
@@ -83,5 +84,5 @@ export interface Post {
   date?: Date;
   image?: string;
   indexImg?: string;
-  userId: string;
+  userId?: string;
 }

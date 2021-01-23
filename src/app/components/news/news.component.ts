@@ -18,6 +18,7 @@ import { FavoritesService } from 'src/app/services/favorites.service';
 import { Subject } from 'rxjs';
 import { uniqueid } from '../../shared/functions';
 import { MatIcon } from '@angular/material/icon';
+
 @Component({
   selector: 'app-news',
   templateUrl: './news.component.html',
@@ -30,7 +31,9 @@ export class NewsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+
   // MatPaginator Output
+  close: boolean = false;
   isError: string = null;
   favList = new Set(['']);
   firestoreKey: string;
@@ -78,35 +81,38 @@ export class NewsComponent implements OnInit, AfterViewInit {
   }
   public getNews(t?: string) {
     this.isLoading = true;
-    this.nw.fetchNews(t).subscribe((data) => {
-      //!show the message snackbar
-      this.snackBar.open('Getting articles...', 'undo', {
-        duration: 4000,
-        horizontalPosition: this.horizontalPosition,
-        verticalPosition: this.verticalPosition,
-      });
-      console.log(data.articles);
-      this.newsList = data.articles;
-      //!! adding uid for articles
-      this.newsList = this.newsList.map((item) => {
-        return { ...item, uuid: uniqueid(), isFav: false };
-      });
-      this.isLoading = false;
+    this.nw.fetchNews(t).subscribe(
+      (data: any) => {
+        //!show the message snackbar
+        this.snackBar.open('Getting articles...', 'undo', {
+          duration: 4000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
 
-      this.datasource = this.newsList;
+        this.newsList = data.articles;
+        //!! adding uid for articles
+        this.newsList = this.newsList.map((item) => {
+          return { ...item, uuid: uniqueid(), isFav: false };
+        });
+        this.isLoading = false;
 
-      this.dataSource = data.articles;
-      this.dataSource.paginator = this.paginator;
-      console.log('this is pagination data', this.dataSource);
-    });
+        this.datasource = this.newsList;
+
+        this.dataSource = data.articles;
+        this.dataSource.paginator = this.paginator;
+        console.log('this is pagination data', this.dataSource);
+      },
+      (err) => (this.isError = err)
+    );
   }
   public searchArticle(val: string) {
     this.newsList.forEach((art, index) => {
       if (
-        art.content.toLowerCase().trimEnd().includes(val) ||
-        art.author.toLowerCase().trimEnd().includes(val) ||
-        art.title.toLowerCase().trimEnd().includes(val) ||
-        art.publishedAt.toString().toLowerCase().trimEnd().includes(val)
+        art.content.toLowerCase().trim().includes(val) ||
+        art.author.toLowerCase().trim().includes(val) ||
+        art.title.toLowerCase().trim().includes(val) ||
+        art.publishedAt.toString().toLowerCase().trim().includes(val)
       ) {
         document.getElementById(index.toString()).classList.remove('d-none');
         console.log('is here');
@@ -133,14 +139,17 @@ export class NewsComponent implements OnInit, AfterViewInit {
       verticalPosition: this.verticalPosition,
     });
     console.log('tab selected');
-    this.nw.fetchNewsByCategory(label).subscribe((data) => {
-      console.log(data);
-      this.newsList = data.articles;
-      this.newsList = this.newsList.map((item) => {
-        return { ...item, uuid: uniqueid(), isFav: false };
-      });
-      this.isLoading = false;
-    });
+    this.nw.fetchNewsByCategory(label).subscribe(
+      (data: any) => {
+        console.log(data);
+        this.newsList = data.articles;
+        this.newsList = this.newsList.map((item) => {
+          return { ...item, uuid: uniqueid(), isFav: false };
+        });
+        this.isLoading = false;
+      },
+      (err) => (this.isError = err)
+    );
   }
   public getServerData(e: PageEvent) {
     // console.log(e);

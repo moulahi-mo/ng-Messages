@@ -70,6 +70,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   settingsEdit: boolean = false;
   settingsDelete: boolean = false;
   close: boolean = false;
+
   constructor(
     private auth: AuthService,
     private Pservice: PostsService,
@@ -129,9 +130,9 @@ export class PostsComponent implements OnInit, OnDestroy {
   public filtring(val: string) {
     this.posts.forEach((art, index) => {
       if (
-        art.title.toLowerCase().trimEnd().includes(val) ||
-        art.author.toLowerCase().trimEnd().includes(val) ||
-        art.body.toLowerCase().trimEnd().includes(val)
+        art.title.toLowerCase().trim().includes(val) ||
+        art.author.toLowerCase().trim().includes(val) ||
+        art.body.toLowerCase().trim().includes(val)
       ) {
         document.getElementById(index.toString()).classList.remove('d-none');
         console.log('is here');

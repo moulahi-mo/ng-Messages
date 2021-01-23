@@ -106,7 +106,7 @@ export class PostAddComponent implements OnInit {
     this.isUploading = true;
     console.log(e);
 
-    const file = e.target.files[0];
+    const file = (e.target as HTMLInputElement).files[0];
     this.filePath = `/posts/${this.userId}/${this.index}`;
     const fileRef = this.storage.ref(this.filePath);
     if (this.filePath) {

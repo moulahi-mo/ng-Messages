@@ -21,7 +21,7 @@ export class AuthorsService {
       .snapshotChanges()
       .pipe(
         map((snaps) => {
-          return snaps.map((snap) => {
+          return snaps.map((snap: any) => {
             return (this.author = {
               id: snap.payload.doc.id,
               name: snap.payload.doc.data().name,
