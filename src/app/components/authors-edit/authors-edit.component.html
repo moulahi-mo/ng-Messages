@@ -19,8 +19,10 @@
               class="d-flex flex-column"
             >
               <ng-template matStepLabel>Personal infos & contact</ng-template>
-              <div class="d-flex justify-content-around">
-                <mat-form-field class="w-75">
+              <div
+                class="d-flex flex-column flex-sm-row justify-content-around"
+              >
+                <mat-form-field class="w-100 mr-5">
                   <mat-label>Name</mat-label>
                   <input matInput formControlName="name" />
                 </mat-form-field>
@@ -114,7 +116,7 @@
 
                   <div
                     formGroupName="address"
-                    class="d-flex justify-content-around"
+                    class="d-flex flex-column flex-md-row justify-content-around"
                   >
                     <mat-form-field>
                       <mat-label>City</mat-label>
@@ -149,7 +151,7 @@
 
                   <div
                     formGroupName="company"
-                    class="d-flex justify-content-around"
+                    class="d-flex flex-column flex-md-row justify-content-around"
                   >
                     <mat-form-field>
                       <mat-label>Name</mat-label>

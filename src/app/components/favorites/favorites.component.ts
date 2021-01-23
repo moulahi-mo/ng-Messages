@@ -32,13 +32,15 @@ export class FavoritesComponent implements OnInit {
     });
   }
   public removeFav(id: string) {
-    this.fav.removeFavorite(id).subscribe(() => {
-      //!show the message snackbar
-      this.snackBar.open('removed from Favorites...', 'undo', {
-        duration: 3000,
-        horizontalPosition: this.horizontalPosition,
-        verticalPosition: this.verticalPosition,
+    if (confirm('Are you Sure ??')) {
+      this.fav.removeFavorite(id).subscribe(() => {
+        //!show the message snackbar
+        this.snackBar.open('removed from Favorites...', 'undo', {
+          duration: 3000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       });
-    });
+    }
   }
 }

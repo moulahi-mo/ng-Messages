@@ -26,13 +26,7 @@
       class=""
       (onSearch)="filtring($event)"
     ></app-filter-search>
-    <app-wheather class="my-3 shadow-lg rounded-lg"></app-wheather>
 
-    <!-- <app-post-aside
-      class="mt-2 shadow-lg rounded-0"
-      [isAuth]="isAuth"
-      [userId]="userId"
-    ></app-post-aside> -->
     <div *ngIf="!settingsAdd">
       <aside *ngIf="isAuth" class="d-flex justify-content-between">
         <mat-list-item class="text-center text-muted">
@@ -46,6 +40,8 @@
         </mat-list-item>
       </aside>
     </div>
+
+    <app-wheather class="my-3 shadow-lg rounded-lg"></app-wheather>
   </section>
   <!-- ! posts -->
   <article class="col-12 my-5" *ngFor="let post of posts; index as i">
