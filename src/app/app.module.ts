@@ -53,6 +53,7 @@ import { WheatherService } from './services/wheather.service';
 import { AdminGuard } from './shared/admin.guard';
 import { StoreModule } from '@ngrx/store';
 import * as newReducer from './store/admin.reducer';
+import { CoreModule } from './shared/core.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -95,22 +96,9 @@ import * as newReducer from './store/admin.reducer';
     CKEditorModule,
     AngularFireStorageModule,
     StoreModule.forRoot({ adminR: newReducer.isAdminReducer }),
+    CoreModule,
   ],
-  providers: [
-    MessagesService,
-    AuthService,
-    AuthGuard,
-    NewsApiService,
-    FavoritesService,
-    AuthorsService,
-    SettingsService,
-    LocalStorageService,
-    UsersService,
-    PostsService,
-    FireStorageService,
-    WheatherService,
-    AdminGuard,
-  ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}

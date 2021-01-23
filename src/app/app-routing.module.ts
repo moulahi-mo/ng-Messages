@@ -21,6 +21,7 @@ import { AuthorsDetailsComponent } from './components/authors-details/authors-de
 import { PostAddComponent } from './components/post-add/post-add.component';
 import { PostEditComponent } from './components/post-edit/post-edit.component';
 import { AdminGuard } from './shared/admin.guard';
+
 const routes: Routes = [
   { path: '', redirectTo: '/posts', pathMatch: 'full' },
 
