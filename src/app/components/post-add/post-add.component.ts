@@ -107,7 +107,7 @@ export class PostAddComponent implements OnInit {
     console.log(e);
 
     const file = e.target.files[0];
-    this.filePath = `/posts/${this.index}`;
+    this.filePath = `/posts/${this.userId}/${this.index}`;
     const fileRef = this.storage.ref(this.filePath);
     if (this.filePath) {
       const task = this.storage.upload(this.filePath, file);
@@ -119,14 +119,14 @@ export class PostAddComponent implements OnInit {
           (t) => {
             fileRef.getDownloadURL().subscribe((link) => {
               this.link = link;
-              console.log(link, 'new one to check');
+              console.log(this.link, 'new one to check');
             });
-            this.link = this.downloadURL;
-            console.log('Down', this.downloadURL);
+            // this.link = this.downloadURL;
+            // console.log('Down', this.downloadURL);
           },
           (err) => (this.isError = err.message),
           () => {
-            // console.log('final link', this.downloadURL);
+            // console.log('final link', this.link);
           }
         );
       //! percentage

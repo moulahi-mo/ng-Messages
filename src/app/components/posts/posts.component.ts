@@ -69,6 +69,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   settingsAdd: boolean = false;
   settingsEdit: boolean = false;
   settingsDelete: boolean = false;
+  close: boolean = false;
   constructor(
     private auth: AuthService,
     private Pservice: PostsService,
@@ -146,7 +147,7 @@ export class PostsComponent implements OnInit, OnDestroy {
     if (confirm('Are you sure ?')) {
       this.Pservice.deletePost(id)
         .then(() => {
-          const filePath = `/posts/${post.indexImg}`;
+          const filePath = `/posts/${this.userId}/${post.indexImg}`;
           this.storage
             .ref(filePath)
             .delete()

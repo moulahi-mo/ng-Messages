@@ -108,7 +108,7 @@ export class PostEditComponent implements OnInit {
     console.log(e);
 
     const file = e.target.files[0];
-    this.filePath = `/posts/${this.post.indexImg}`;
+    this.filePath = `/posts/${this.post.userId}/${this.post.indexImg}`;
     const fileRef = this.storage.ref(this.filePath);
     if (this.filePath) {
       const task = this.storage.upload(this.filePath, file);

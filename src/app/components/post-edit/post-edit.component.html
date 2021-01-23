@@ -84,7 +84,7 @@
           <!-- <input type="file" (change)="uploadFile($event)" class="mb-3" /> -->
           <mat-progress-bar
             *ngIf="uploadProgress !== null && uploadProgress < 100"
-            class="my-2 ml-3"
+            class="mb-2 ml-3"
             mode="determinate"
             [value]="uploadProgress"
             color="primary"
@@ -110,7 +110,8 @@
         <button
           [disabled]="
             postForm.invalid ||
-            (uploadProgress !== null && uploadProgress < 100)
+            (uploadProgress !== null && uploadProgress < 100 && !downloadURL) ||
+            !link
           "
           mat-raised-button
           color="primary"

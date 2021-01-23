@@ -12,7 +12,10 @@
   Please Login or Signup to see the content thank You !
 </p>
 <!-- ? if error -->
-<div *ngIf="isError" class="mt-5 alert alert-danger text-center my-5">
+<div *ngIf="isError && !close" class="mt-5 alert alert-danger text-center my-5">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span (click)="close = !close" aria-hidden="true">&times;</span>
+  </button>
   <h4>{{ isError }}</h4>
 </div>
 
